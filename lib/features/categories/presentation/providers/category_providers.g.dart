@@ -247,5 +247,125 @@ class _CategoriesListProviderElement
       (origin as CategoriesListProvider).includeArchived;
 }
 
+String _$categoryByIdHash() => r'22522654b71026e48abdbac3a51be0f8682c7f05';
+
+/// See also [categoryById].
+@ProviderFor(categoryById)
+const categoryByIdProvider = CategoryByIdFamily();
+
+/// See also [categoryById].
+class CategoryByIdFamily extends Family<AsyncValue<Category?>> {
+  /// See also [categoryById].
+  const CategoryByIdFamily();
+
+  /// See also [categoryById].
+  CategoryByIdProvider call(int id) {
+    return CategoryByIdProvider(id);
+  }
+
+  @override
+  CategoryByIdProvider getProviderOverride(
+    covariant CategoryByIdProvider provider,
+  ) {
+    return call(provider.id);
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'categoryByIdProvider';
+}
+
+/// See also [categoryById].
+class CategoryByIdProvider extends AutoDisposeStreamProvider<Category?> {
+  /// See also [categoryById].
+  CategoryByIdProvider(int id)
+    : this._internal(
+        (ref) => categoryById(ref as CategoryByIdRef, id),
+        from: categoryByIdProvider,
+        name: r'categoryByIdProvider',
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$categoryByIdHash,
+        dependencies: CategoryByIdFamily._dependencies,
+        allTransitiveDependencies:
+            CategoryByIdFamily._allTransitiveDependencies,
+        id: id,
+      );
+
+  CategoryByIdProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.id,
+  }) : super.internal();
+
+  final int id;
+
+  @override
+  Override overrideWith(
+    Stream<Category?> Function(CategoryByIdRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: CategoryByIdProvider._internal(
+        (ref) => create(ref as CategoryByIdRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        id: id,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeStreamProviderElement<Category?> createElement() {
+    return _CategoryByIdProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is CategoryByIdProvider && other.id == id;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, id.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin CategoryByIdRef on AutoDisposeStreamProviderRef<Category?> {
+  /// The parameter `id` of this provider.
+  int get id;
+}
+
+class _CategoryByIdProviderElement
+    extends AutoDisposeStreamProviderElement<Category?>
+    with CategoryByIdRef {
+  _CategoryByIdProviderElement(super.provider);
+
+  @override
+  int get id => (origin as CategoryByIdProvider).id;
+}
+
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

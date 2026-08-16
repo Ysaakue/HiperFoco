@@ -106,4 +106,67 @@ void main() {
 
     await _disposeCleanly(tester);
   });
+
+  testWidgets(
+      'tapping play starts a session, opens the timer screen, and Home '
+      'reflects the active state on return', (tester) async {
+    await tester.pumpWidget(_wrap(database, const CategoriesListScreen()));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextFormField), 'Work');
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+
+    expect(find.byIcon(Icons.play_circle_outline), findsOneWidget);
+
+    // The timer screen has a periodic ticker, so pumpAndSettle() (which
+    // never settles with a repeating Timer) is avoided from here on in
+    // favor of explicit pump()s.
+    await tester.tap(find.byIcon(Icons.play_circle_outline));
+    await tester.pump();
+    await tester.pump();
+
+    expect(find.text('Focusing'), findsOneWidget);
+    expect(find.byIcon(Icons.pause), findsOneWidget);
+
+    await tester.tap(find.byType(BackButton));
+    await tester.pump();
+    await tester.pump();
+
+    expect(find.byIcon(Icons.pause_circle_filled), findsOneWidget);
+    expect(find.byIcon(Icons.play_circle_outline), findsNothing);
+
+    await _disposeCleanly(tester);
+  });
+
+  testWidgets(
+      'viewing history from the category menu does not start a session',
+      (tester) async {
+    await tester.pumpWidget(_wrap(database, const CategoriesListScreen()));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byType(TextFormField), 'Work');
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byIcon(Icons.more_vert));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('History'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('No focus sessions on this day.'), findsOneWidget);
+
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+
+    expect(find.byIcon(Icons.play_circle_outline), findsOneWidget);
+    expect(find.byIcon(Icons.play_circle_fill), findsNothing);
+    expect(find.byIcon(Icons.pause_circle_filled), findsNothing);
+
+    await _disposeCleanly(tester);
+  });
 }

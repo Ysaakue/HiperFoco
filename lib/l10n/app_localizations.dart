@@ -361,6 +361,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Are you sure you want to delete \"{title}\"?'**
   String deleteTaskConfirm(String title);
+
+  /// No description provided for @timerStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start timer'**
+  String get timerStart;
+
+  /// No description provided for @timerPause.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause'**
+  String get timerPause;
+
+  /// No description provided for @timerResume.
+  ///
+  /// In en, this message translates to:
+  /// **'Resume'**
+  String get timerResume;
+
+  /// No description provided for @timerStop.
+  ///
+  /// In en, this message translates to:
+  /// **'Stop'**
+  String get timerStop;
+
+  /// No description provided for @timerRunning.
+  ///
+  /// In en, this message translates to:
+  /// **'Focusing'**
+  String get timerRunning;
+
+  /// No description provided for @timerPaused.
+  ///
+  /// In en, this message translates to:
+  /// **'Paused'**
+  String get timerPaused;
+
+  /// No description provided for @timerTodayCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'This category today'**
+  String get timerTodayCategory;
+
+  /// No description provided for @timerTodayTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get timerTodayTotal;
+
+  /// No description provided for @timerHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get timerHistory;
+
+  /// No description provided for @timerHistoryToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get timerHistoryToday;
+
+  /// No description provided for @timerHistoryEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No focus sessions on this day.'**
+  String get timerHistoryEmpty;
+
+  /// No description provided for @timerHistoryUnknownCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown category'**
+  String get timerHistoryUnknownCategory;
 }
 
 class _AppLocalizationsDelegate

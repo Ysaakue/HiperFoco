@@ -53,5 +53,17 @@
         "type": "String"
       }
     }
-  }
+  },
+  "timerStart": "Start timer",
+  "timerPause": "Pause",
+  "timerResume": "Resume",
+  "timerStop": "Stop",
+  "timerRunning": "Focusing",
+  "timerPaused": "Paused",
+  "timerTodayCategory": "This category today",
+  "timerTodayTotal": "Today",
+  "timerHistory": "History",
+  "timerHistoryToday": "Today",
+  "timerHistoryEmpty": "No focus sessions on this day.",
+  "timerHistoryUnknownCategory": "Unknown category"
 }

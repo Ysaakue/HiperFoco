@@ -142,4 +142,40 @@ class AppLocalizationsPt extends AppLocalizations {
   String deleteTaskConfirm(String title) {
     return 'Tem certeza que deseja excluir \"$title\"?';
   }
+
+  @override
+  String get timerStart => 'Iniciar cronômetro';
+
+  @override
+  String get timerPause => 'Pausar';
+
+  @override
+  String get timerResume => 'Retomar';
+
+  @override
+  String get timerStop => 'Encerrar';
+
+  @override
+  String get timerRunning => 'Focando';
+
+  @override
+  String get timerPaused => 'Pausado';
+
+  @override
+  String get timerTodayCategory => 'Esta categoria hoje';
+
+  @override
+  String get timerTodayTotal => 'Hoje';
+
+  @override
+  String get timerHistory => 'Histórico';
+
+  @override
+  String get timerHistoryToday => 'Hoje';
+
+  @override
+  String get timerHistoryEmpty => 'Nenhuma sessão de foco neste dia.';
+
+  @override
+  String get timerHistoryUnknownCategory => 'Categoria desconhecida';
 }

@@ -141,4 +141,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String deleteTaskConfirm(String title) {
     return 'Are you sure you want to delete \"$title\"?';
   }
+
+  @override
+  String get timerStart => 'Start timer';
+
+  @override
+  String get timerPause => 'Pause';
+
+  @override
+  String get timerResume => 'Resume';
+
+  @override
+  String get timerStop => 'Stop';
+
+  @override
+  String get timerRunning => 'Focusing';
+
+  @override
+  String get timerPaused => 'Paused';
+
+  @override
+  String get timerTodayCategory => 'This category today';
+
+  @override
+  String get timerTodayTotal => 'Today';
+
+  @override
+  String get timerHistory => 'History';
+
+  @override
+  String get timerHistoryToday => 'Today';
+
+  @override
+  String get timerHistoryEmpty => 'No focus sessions on this day.';
+
+  @override
+  String get timerHistoryUnknownCategory => 'Unknown category';
 }

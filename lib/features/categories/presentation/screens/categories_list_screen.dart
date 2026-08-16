@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/widgets/empty_state.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../timer/presentation/providers/timer_providers.dart';
+import '../../../timer/presentation/screens/timer_history_screen.dart';
+import '../../../timer/presentation/screens/timer_screen.dart';
 import '../../domain/entities/category.dart';
 import '../providers/category_providers.dart';
 import '../widgets/category_tile.dart';
@@ -24,6 +27,7 @@ class _CategoriesListScreenState extends ConsumerState<CategoriesListScreen> {
     final l10n = AppLocalizations.of(context)!;
     final categoriesAsync =
         ref.watch(categoriesListProvider(includeArchived: _showArchived));
+    final activeSession = ref.watch(activeTimerSessionProvider).valueOrNull;
 
     return Scaffold(
       appBar: AppBar(
@@ -53,6 +57,7 @@ class _CategoriesListScreenState extends ConsumerState<CategoriesListScreen> {
             itemCount: categories.length,
             itemBuilder: (context, index) {
               final category = categories[index];
+              final isActive = activeSession?.categoryId == category.id;
               return Opacity(
                 opacity: category.isArchived ? 0.5 : 1,
                 child: CategoryTile(
@@ -61,6 +66,12 @@ class _CategoriesListScreenState extends ConsumerState<CategoriesListScreen> {
                   onToggleArchived: () => ref
                       .read(setCategoryArchivedUseCaseProvider)
                       .call(category.id, !category.isArchived),
+                  isActiveSession: isActive,
+                  isActiveSessionRunning: isActive && (activeSession?.isRunning ?? false),
+                  onPlayTap: () => _onPlayTap(context, category, activeSession?.categoryId),
+                  onViewHistory: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const TimerHistoryScreen()),
+                  ),
                 ),
               );
             },
@@ -74,6 +85,21 @@ class _CategoriesListScreenState extends ConsumerState<CategoriesListScreen> {
         child: const Icon(Icons.add),
       ),
     );
+  }
+
+  Future<void> _onPlayTap(
+    BuildContext context,
+    Category category,
+    int? activeSessionCategoryId,
+  ) async {
+    if (activeSessionCategoryId != category.id) {
+      await ref.read(startTimerUseCaseProvider).call(categoryId: category.id);
+    }
+    if (context.mounted) {
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => const TimerScreen()),
+      );
+    }
   }
 
   void _openForm(BuildContext context, {Category? category}) {

@@ -50,5 +50,17 @@
         "type": "String"
       }
     }
-  }
+  },
+  "timerStart": "Iniciar cronômetro",
+  "timerPause": "Pausar",
+  "timerResume": "Retomar",
+  "timerStop": "Encerrar",
+  "timerRunning": "Focando",
+  "timerPaused": "Pausado",
+  "timerTodayCategory": "Esta categoria hoje",
+  "timerTodayTotal": "Hoje",
+  "timerHistory": "Histórico",
+  "timerHistoryToday": "Hoje",
+  "timerHistoryEmpty": "Nenhuma sessão de foco neste dia.",
+  "timerHistoryUnknownCategory": "Categoria desconhecida"
 }

@@ -1024,18 +1024,889 @@ class TasksCompanion extends UpdateCompanion<TaskRow> {
   }
 }
 
+class $TimerSessionsTable extends TimerSessions
+    with TableInfo<$TimerSessionsTable, TimerSessionRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TimerSessionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _taskIdMeta = const VerificationMeta('taskId');
+  @override
+  late final GeneratedColumn<int> taskId = GeneratedColumn<int>(
+    'task_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES tasks (id)',
+    ),
+  );
+  static const VerificationMeta _categoryIdMeta = const VerificationMeta(
+    'categoryId',
+  );
+  @override
+  late final GeneratedColumn<int> categoryId = GeneratedColumn<int>(
+    'category_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES categories (id)',
+    ),
+  );
+  @override
+  late final GeneratedColumnWithTypeConverter<TimerSessionStatus, String>
+  status = GeneratedColumn<String>(
+    'status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    defaultValue: Constant(TimerSessionStatus.running.name),
+  ).withConverter<TimerSessionStatus>($TimerSessionsTable.$converterstatus);
+  static const VerificationMeta _startedAtMeta = const VerificationMeta(
+    'startedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> startedAt = GeneratedColumn<DateTime>(
+    'started_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _completedAtMeta = const VerificationMeta(
+    'completedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> completedAt = GeneratedColumn<DateTime>(
+    'completed_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _totalDurationSecondsMeta =
+      const VerificationMeta('totalDurationSeconds');
+  @override
+  late final GeneratedColumn<int> totalDurationSeconds = GeneratedColumn<int>(
+    'total_duration_seconds',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _currentIntervalStartedAtMeta =
+      const VerificationMeta('currentIntervalStartedAt');
+  @override
+  late final GeneratedColumn<DateTime> currentIntervalStartedAt =
+      GeneratedColumn<DateTime>(
+        'current_interval_started_at',
+        aliasedName,
+        true,
+        type: DriftSqlType.dateTime,
+        requiredDuringInsert: false,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    taskId,
+    categoryId,
+    status,
+    startedAt,
+    completedAt,
+    totalDurationSeconds,
+    currentIntervalStartedAt,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'timer_sessions';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TimerSessionRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('task_id')) {
+      context.handle(
+        _taskIdMeta,
+        taskId.isAcceptableOrUnknown(data['task_id']!, _taskIdMeta),
+      );
+    }
+    if (data.containsKey('category_id')) {
+      context.handle(
+        _categoryIdMeta,
+        categoryId.isAcceptableOrUnknown(data['category_id']!, _categoryIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_categoryIdMeta);
+    }
+    if (data.containsKey('started_at')) {
+      context.handle(
+        _startedAtMeta,
+        startedAt.isAcceptableOrUnknown(data['started_at']!, _startedAtMeta),
+      );
+    }
+    if (data.containsKey('completed_at')) {
+      context.handle(
+        _completedAtMeta,
+        completedAt.isAcceptableOrUnknown(
+          data['completed_at']!,
+          _completedAtMeta,
+        ),
+      );
+    }
+    if (data.containsKey('total_duration_seconds')) {
+      context.handle(
+        _totalDurationSecondsMeta,
+        totalDurationSeconds.isAcceptableOrUnknown(
+          data['total_duration_seconds']!,
+          _totalDurationSecondsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('current_interval_started_at')) {
+      context.handle(
+        _currentIntervalStartedAtMeta,
+        currentIntervalStartedAt.isAcceptableOrUnknown(
+          data['current_interval_started_at']!,
+          _currentIntervalStartedAtMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TimerSessionRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TimerSessionRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      taskId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}task_id'],
+      ),
+      categoryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}category_id'],
+      )!,
+      status: $TimerSessionsTable.$converterstatus.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}status'],
+        )!,
+      ),
+      startedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}started_at'],
+      )!,
+      completedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}completed_at'],
+      ),
+      totalDurationSeconds: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}total_duration_seconds'],
+      )!,
+      currentIntervalStartedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}current_interval_started_at'],
+      ),
+    );
+  }
+
+  @override
+  $TimerSessionsTable createAlias(String alias) {
+    return $TimerSessionsTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<TimerSessionStatus, String, String>
+  $converterstatus = const EnumNameConverter<TimerSessionStatus>(
+    TimerSessionStatus.values,
+  );
+}
+
+class TimerSessionRow extends DataClass implements Insertable<TimerSessionRow> {
+  final int id;
+  final int? taskId;
+  final int categoryId;
+  final TimerSessionStatus status;
+  final DateTime startedAt;
+  final DateTime? completedAt;
+  final int totalDurationSeconds;
+
+  /// Start time of the currently open interval. Non-null only while the
+  /// session is running; mirrors the open row in [TimerIntervals] as a
+  /// fast-read cache so the UI never needs a join to render live elapsed
+  /// time.
+  final DateTime? currentIntervalStartedAt;
+  const TimerSessionRow({
+    required this.id,
+    this.taskId,
+    required this.categoryId,
+    required this.status,
+    required this.startedAt,
+    this.completedAt,
+    required this.totalDurationSeconds,
+    this.currentIntervalStartedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    if (!nullToAbsent || taskId != null) {
+      map['task_id'] = Variable<int>(taskId);
+    }
+    map['category_id'] = Variable<int>(categoryId);
+    {
+      map['status'] = Variable<String>(
+        $TimerSessionsTable.$converterstatus.toSql(status),
+      );
+    }
+    map['started_at'] = Variable<DateTime>(startedAt);
+    if (!nullToAbsent || completedAt != null) {
+      map['completed_at'] = Variable<DateTime>(completedAt);
+    }
+    map['total_duration_seconds'] = Variable<int>(totalDurationSeconds);
+    if (!nullToAbsent || currentIntervalStartedAt != null) {
+      map['current_interval_started_at'] = Variable<DateTime>(
+        currentIntervalStartedAt,
+      );
+    }
+    return map;
+  }
+
+  TimerSessionsCompanion toCompanion(bool nullToAbsent) {
+    return TimerSessionsCompanion(
+      id: Value(id),
+      taskId: taskId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(taskId),
+      categoryId: Value(categoryId),
+      status: Value(status),
+      startedAt: Value(startedAt),
+      completedAt: completedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(completedAt),
+      totalDurationSeconds: Value(totalDurationSeconds),
+      currentIntervalStartedAt: currentIntervalStartedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(currentIntervalStartedAt),
+    );
+  }
+
+  factory TimerSessionRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TimerSessionRow(
+      id: serializer.fromJson<int>(json['id']),
+      taskId: serializer.fromJson<int?>(json['taskId']),
+      categoryId: serializer.fromJson<int>(json['categoryId']),
+      status: $TimerSessionsTable.$converterstatus.fromJson(
+        serializer.fromJson<String>(json['status']),
+      ),
+      startedAt: serializer.fromJson<DateTime>(json['startedAt']),
+      completedAt: serializer.fromJson<DateTime?>(json['completedAt']),
+      totalDurationSeconds: serializer.fromJson<int>(
+        json['totalDurationSeconds'],
+      ),
+      currentIntervalStartedAt: serializer.fromJson<DateTime?>(
+        json['currentIntervalStartedAt'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'taskId': serializer.toJson<int?>(taskId),
+      'categoryId': serializer.toJson<int>(categoryId),
+      'status': serializer.toJson<String>(
+        $TimerSessionsTable.$converterstatus.toJson(status),
+      ),
+      'startedAt': serializer.toJson<DateTime>(startedAt),
+      'completedAt': serializer.toJson<DateTime?>(completedAt),
+      'totalDurationSeconds': serializer.toJson<int>(totalDurationSeconds),
+      'currentIntervalStartedAt': serializer.toJson<DateTime?>(
+        currentIntervalStartedAt,
+      ),
+    };
+  }
+
+  TimerSessionRow copyWith({
+    int? id,
+    Value<int?> taskId = const Value.absent(),
+    int? categoryId,
+    TimerSessionStatus? status,
+    DateTime? startedAt,
+    Value<DateTime?> completedAt = const Value.absent(),
+    int? totalDurationSeconds,
+    Value<DateTime?> currentIntervalStartedAt = const Value.absent(),
+  }) => TimerSessionRow(
+    id: id ?? this.id,
+    taskId: taskId.present ? taskId.value : this.taskId,
+    categoryId: categoryId ?? this.categoryId,
+    status: status ?? this.status,
+    startedAt: startedAt ?? this.startedAt,
+    completedAt: completedAt.present ? completedAt.value : this.completedAt,
+    totalDurationSeconds: totalDurationSeconds ?? this.totalDurationSeconds,
+    currentIntervalStartedAt: currentIntervalStartedAt.present
+        ? currentIntervalStartedAt.value
+        : this.currentIntervalStartedAt,
+  );
+  TimerSessionRow copyWithCompanion(TimerSessionsCompanion data) {
+    return TimerSessionRow(
+      id: data.id.present ? data.id.value : this.id,
+      taskId: data.taskId.present ? data.taskId.value : this.taskId,
+      categoryId: data.categoryId.present
+          ? data.categoryId.value
+          : this.categoryId,
+      status: data.status.present ? data.status.value : this.status,
+      startedAt: data.startedAt.present ? data.startedAt.value : this.startedAt,
+      completedAt: data.completedAt.present
+          ? data.completedAt.value
+          : this.completedAt,
+      totalDurationSeconds: data.totalDurationSeconds.present
+          ? data.totalDurationSeconds.value
+          : this.totalDurationSeconds,
+      currentIntervalStartedAt: data.currentIntervalStartedAt.present
+          ? data.currentIntervalStartedAt.value
+          : this.currentIntervalStartedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TimerSessionRow(')
+          ..write('id: $id, ')
+          ..write('taskId: $taskId, ')
+          ..write('categoryId: $categoryId, ')
+          ..write('status: $status, ')
+          ..write('startedAt: $startedAt, ')
+          ..write('completedAt: $completedAt, ')
+          ..write('totalDurationSeconds: $totalDurationSeconds, ')
+          ..write('currentIntervalStartedAt: $currentIntervalStartedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    taskId,
+    categoryId,
+    status,
+    startedAt,
+    completedAt,
+    totalDurationSeconds,
+    currentIntervalStartedAt,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TimerSessionRow &&
+          other.id == this.id &&
+          other.taskId == this.taskId &&
+          other.categoryId == this.categoryId &&
+          other.status == this.status &&
+          other.startedAt == this.startedAt &&
+          other.completedAt == this.completedAt &&
+          other.totalDurationSeconds == this.totalDurationSeconds &&
+          other.currentIntervalStartedAt == this.currentIntervalStartedAt);
+}
+
+class TimerSessionsCompanion extends UpdateCompanion<TimerSessionRow> {
+  final Value<int> id;
+  final Value<int?> taskId;
+  final Value<int> categoryId;
+  final Value<TimerSessionStatus> status;
+  final Value<DateTime> startedAt;
+  final Value<DateTime?> completedAt;
+  final Value<int> totalDurationSeconds;
+  final Value<DateTime?> currentIntervalStartedAt;
+  const TimerSessionsCompanion({
+    this.id = const Value.absent(),
+    this.taskId = const Value.absent(),
+    this.categoryId = const Value.absent(),
+    this.status = const Value.absent(),
+    this.startedAt = const Value.absent(),
+    this.completedAt = const Value.absent(),
+    this.totalDurationSeconds = const Value.absent(),
+    this.currentIntervalStartedAt = const Value.absent(),
+  });
+  TimerSessionsCompanion.insert({
+    this.id = const Value.absent(),
+    this.taskId = const Value.absent(),
+    required int categoryId,
+    this.status = const Value.absent(),
+    this.startedAt = const Value.absent(),
+    this.completedAt = const Value.absent(),
+    this.totalDurationSeconds = const Value.absent(),
+    this.currentIntervalStartedAt = const Value.absent(),
+  }) : categoryId = Value(categoryId);
+  static Insertable<TimerSessionRow> custom({
+    Expression<int>? id,
+    Expression<int>? taskId,
+    Expression<int>? categoryId,
+    Expression<String>? status,
+    Expression<DateTime>? startedAt,
+    Expression<DateTime>? completedAt,
+    Expression<int>? totalDurationSeconds,
+    Expression<DateTime>? currentIntervalStartedAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (taskId != null) 'task_id': taskId,
+      if (categoryId != null) 'category_id': categoryId,
+      if (status != null) 'status': status,
+      if (startedAt != null) 'started_at': startedAt,
+      if (completedAt != null) 'completed_at': completedAt,
+      if (totalDurationSeconds != null)
+        'total_duration_seconds': totalDurationSeconds,
+      if (currentIntervalStartedAt != null)
+        'current_interval_started_at': currentIntervalStartedAt,
+    });
+  }
+
+  TimerSessionsCompanion copyWith({
+    Value<int>? id,
+    Value<int?>? taskId,
+    Value<int>? categoryId,
+    Value<TimerSessionStatus>? status,
+    Value<DateTime>? startedAt,
+    Value<DateTime?>? completedAt,
+    Value<int>? totalDurationSeconds,
+    Value<DateTime?>? currentIntervalStartedAt,
+  }) {
+    return TimerSessionsCompanion(
+      id: id ?? this.id,
+      taskId: taskId ?? this.taskId,
+      categoryId: categoryId ?? this.categoryId,
+      status: status ?? this.status,
+      startedAt: startedAt ?? this.startedAt,
+      completedAt: completedAt ?? this.completedAt,
+      totalDurationSeconds: totalDurationSeconds ?? this.totalDurationSeconds,
+      currentIntervalStartedAt:
+          currentIntervalStartedAt ?? this.currentIntervalStartedAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (taskId.present) {
+      map['task_id'] = Variable<int>(taskId.value);
+    }
+    if (categoryId.present) {
+      map['category_id'] = Variable<int>(categoryId.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(
+        $TimerSessionsTable.$converterstatus.toSql(status.value),
+      );
+    }
+    if (startedAt.present) {
+      map['started_at'] = Variable<DateTime>(startedAt.value);
+    }
+    if (completedAt.present) {
+      map['completed_at'] = Variable<DateTime>(completedAt.value);
+    }
+    if (totalDurationSeconds.present) {
+      map['total_duration_seconds'] = Variable<int>(totalDurationSeconds.value);
+    }
+    if (currentIntervalStartedAt.present) {
+      map['current_interval_started_at'] = Variable<DateTime>(
+        currentIntervalStartedAt.value,
+      );
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TimerSessionsCompanion(')
+          ..write('id: $id, ')
+          ..write('taskId: $taskId, ')
+          ..write('categoryId: $categoryId, ')
+          ..write('status: $status, ')
+          ..write('startedAt: $startedAt, ')
+          ..write('completedAt: $completedAt, ')
+          ..write('totalDurationSeconds: $totalDurationSeconds, ')
+          ..write('currentIntervalStartedAt: $currentIntervalStartedAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TimerIntervalsTable extends TimerIntervals
+    with TableInfo<$TimerIntervalsTable, TimerIntervalRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TimerIntervalsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _sessionIdMeta = const VerificationMeta(
+    'sessionId',
+  );
+  @override
+  late final GeneratedColumn<int> sessionId = GeneratedColumn<int>(
+    'session_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES timer_sessions (id) ON DELETE CASCADE',
+    ),
+  );
+  static const VerificationMeta _startedAtMeta = const VerificationMeta(
+    'startedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> startedAt = GeneratedColumn<DateTime>(
+    'started_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _endedAtMeta = const VerificationMeta(
+    'endedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> endedAt = GeneratedColumn<DateTime>(
+    'ended_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, sessionId, startedAt, endedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'timer_intervals';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TimerIntervalRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('session_id')) {
+      context.handle(
+        _sessionIdMeta,
+        sessionId.isAcceptableOrUnknown(data['session_id']!, _sessionIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_sessionIdMeta);
+    }
+    if (data.containsKey('started_at')) {
+      context.handle(
+        _startedAtMeta,
+        startedAt.isAcceptableOrUnknown(data['started_at']!, _startedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_startedAtMeta);
+    }
+    if (data.containsKey('ended_at')) {
+      context.handle(
+        _endedAtMeta,
+        endedAt.isAcceptableOrUnknown(data['ended_at']!, _endedAtMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TimerIntervalRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TimerIntervalRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      sessionId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}session_id'],
+      )!,
+      startedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}started_at'],
+      )!,
+      endedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}ended_at'],
+      ),
+    );
+  }
+
+  @override
+  $TimerIntervalsTable createAlias(String alias) {
+    return $TimerIntervalsTable(attachedDatabase, alias);
+  }
+}
+
+class TimerIntervalRow extends DataClass
+    implements Insertable<TimerIntervalRow> {
+  final int id;
+  final int sessionId;
+  final DateTime startedAt;
+  final DateTime? endedAt;
+  const TimerIntervalRow({
+    required this.id,
+    required this.sessionId,
+    required this.startedAt,
+    this.endedAt,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['session_id'] = Variable<int>(sessionId);
+    map['started_at'] = Variable<DateTime>(startedAt);
+    if (!nullToAbsent || endedAt != null) {
+      map['ended_at'] = Variable<DateTime>(endedAt);
+    }
+    return map;
+  }
+
+  TimerIntervalsCompanion toCompanion(bool nullToAbsent) {
+    return TimerIntervalsCompanion(
+      id: Value(id),
+      sessionId: Value(sessionId),
+      startedAt: Value(startedAt),
+      endedAt: endedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(endedAt),
+    );
+  }
+
+  factory TimerIntervalRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TimerIntervalRow(
+      id: serializer.fromJson<int>(json['id']),
+      sessionId: serializer.fromJson<int>(json['sessionId']),
+      startedAt: serializer.fromJson<DateTime>(json['startedAt']),
+      endedAt: serializer.fromJson<DateTime?>(json['endedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'sessionId': serializer.toJson<int>(sessionId),
+      'startedAt': serializer.toJson<DateTime>(startedAt),
+      'endedAt': serializer.toJson<DateTime?>(endedAt),
+    };
+  }
+
+  TimerIntervalRow copyWith({
+    int? id,
+    int? sessionId,
+    DateTime? startedAt,
+    Value<DateTime?> endedAt = const Value.absent(),
+  }) => TimerIntervalRow(
+    id: id ?? this.id,
+    sessionId: sessionId ?? this.sessionId,
+    startedAt: startedAt ?? this.startedAt,
+    endedAt: endedAt.present ? endedAt.value : this.endedAt,
+  );
+  TimerIntervalRow copyWithCompanion(TimerIntervalsCompanion data) {
+    return TimerIntervalRow(
+      id: data.id.present ? data.id.value : this.id,
+      sessionId: data.sessionId.present ? data.sessionId.value : this.sessionId,
+      startedAt: data.startedAt.present ? data.startedAt.value : this.startedAt,
+      endedAt: data.endedAt.present ? data.endedAt.value : this.endedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TimerIntervalRow(')
+          ..write('id: $id, ')
+          ..write('sessionId: $sessionId, ')
+          ..write('startedAt: $startedAt, ')
+          ..write('endedAt: $endedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, sessionId, startedAt, endedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TimerIntervalRow &&
+          other.id == this.id &&
+          other.sessionId == this.sessionId &&
+          other.startedAt == this.startedAt &&
+          other.endedAt == this.endedAt);
+}
+
+class TimerIntervalsCompanion extends UpdateCompanion<TimerIntervalRow> {
+  final Value<int> id;
+  final Value<int> sessionId;
+  final Value<DateTime> startedAt;
+  final Value<DateTime?> endedAt;
+  const TimerIntervalsCompanion({
+    this.id = const Value.absent(),
+    this.sessionId = const Value.absent(),
+    this.startedAt = const Value.absent(),
+    this.endedAt = const Value.absent(),
+  });
+  TimerIntervalsCompanion.insert({
+    this.id = const Value.absent(),
+    required int sessionId,
+    required DateTime startedAt,
+    this.endedAt = const Value.absent(),
+  }) : sessionId = Value(sessionId),
+       startedAt = Value(startedAt);
+  static Insertable<TimerIntervalRow> custom({
+    Expression<int>? id,
+    Expression<int>? sessionId,
+    Expression<DateTime>? startedAt,
+    Expression<DateTime>? endedAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (sessionId != null) 'session_id': sessionId,
+      if (startedAt != null) 'started_at': startedAt,
+      if (endedAt != null) 'ended_at': endedAt,
+    });
+  }
+
+  TimerIntervalsCompanion copyWith({
+    Value<int>? id,
+    Value<int>? sessionId,
+    Value<DateTime>? startedAt,
+    Value<DateTime?>? endedAt,
+  }) {
+    return TimerIntervalsCompanion(
+      id: id ?? this.id,
+      sessionId: sessionId ?? this.sessionId,
+      startedAt: startedAt ?? this.startedAt,
+      endedAt: endedAt ?? this.endedAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (sessionId.present) {
+      map['session_id'] = Variable<int>(sessionId.value);
+    }
+    if (startedAt.present) {
+      map['started_at'] = Variable<DateTime>(startedAt.value);
+    }
+    if (endedAt.present) {
+      map['ended_at'] = Variable<DateTime>(endedAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TimerIntervalsCompanion(')
+          ..write('id: $id, ')
+          ..write('sessionId: $sessionId, ')
+          ..write('startedAt: $startedAt, ')
+          ..write('endedAt: $endedAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $CategoriesTable categories = $CategoriesTable(this);
   late final $TasksTable tasks = $TasksTable(this);
+  late final $TimerSessionsTable timerSessions = $TimerSessionsTable(this);
+  late final $TimerIntervalsTable timerIntervals = $TimerIntervalsTable(this);
   late final CategoryDao categoryDao = CategoryDao(this as AppDatabase);
   late final TaskDao taskDao = TaskDao(this as AppDatabase);
+  late final TimerDao timerDao = TimerDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [categories, tasks];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+    categories,
+    tasks,
+    timerSessions,
+    timerIntervals,
+  ];
+  @override
+  StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'timer_sessions',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('timer_intervals', kind: UpdateKind.delete)],
+    ),
+  ]);
 }
 
 typedef $$CategoriesTableCreateCompanionBuilder =
@@ -1075,6 +1946,27 @@ final class $$CategoriesTableReferences
     ).filter((f) => f.categoryId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_tasksRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$TimerSessionsTable, List<TimerSessionRow>>
+  _timerSessionsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.timerSessions,
+    aliasName: $_aliasNameGenerator(
+      db.categories.id,
+      db.timerSessions.categoryId,
+    ),
+  );
+
+  $$TimerSessionsTableProcessedTableManager get timerSessionsRefs {
+    final manager = $$TimerSessionsTableTableManager(
+      $_db,
+      $_db.timerSessions,
+    ).filter((f) => f.categoryId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_timerSessionsRefsTable($_db));
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
     );
@@ -1136,6 +2028,31 @@ class $$CategoriesTableFilterComposer
           }) => $$TasksTableFilterComposer(
             $db: $db,
             $table: $db.tasks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> timerSessionsRefs(
+    Expression<bool> Function($$TimerSessionsTableFilterComposer f) f,
+  ) {
+    final $$TimerSessionsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.timerSessions,
+      getReferencedColumn: (t) => t.categoryId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TimerSessionsTableFilterComposer(
+            $db: $db,
+            $table: $db.timerSessions,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -1241,6 +2158,31 @@ class $$CategoriesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> timerSessionsRefs<T extends Object>(
+    Expression<T> Function($$TimerSessionsTableAnnotationComposer a) f,
+  ) {
+    final $$TimerSessionsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.timerSessions,
+      getReferencedColumn: (t) => t.categoryId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TimerSessionsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.timerSessions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$CategoriesTableTableManager
@@ -1256,7 +2198,7 @@ class $$CategoriesTableTableManager
           $$CategoriesTableUpdateCompanionBuilder,
           (CategoryRow, $$CategoriesTableReferences),
           CategoryRow,
-          PrefetchHooks Function({bool tasksRefs})
+          PrefetchHooks Function({bool tasksRefs, bool timerSessionsRefs})
         > {
   $$CategoriesTableTableManager(_$AppDatabase db, $CategoriesTable table)
     : super(
@@ -1309,32 +2251,63 @@ class $$CategoriesTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({tasksRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [if (tasksRefs) db.tasks],
-              addJoins: null,
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (tasksRefs)
-                    await $_getPrefetchedData<
-                      CategoryRow,
-                      $CategoriesTable,
-                      TaskRow
-                    >(
-                      currentTable: table,
-                      referencedTable: $$CategoriesTableReferences
-                          ._tasksRefsTable(db),
-                      managerFromTypedResult: (p0) =>
-                          $$CategoriesTableReferences(db, table, p0).tasksRefs,
-                      referencedItemsForCurrentItem: (item, referencedItems) =>
-                          referencedItems.where((e) => e.categoryId == item.id),
-                      typedResults: items,
-                    ),
-                ];
+          prefetchHooksCallback:
+              ({tasksRefs = false, timerSessionsRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (tasksRefs) db.tasks,
+                    if (timerSessionsRefs) db.timerSessions,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (tasksRefs)
+                        await $_getPrefetchedData<
+                          CategoryRow,
+                          $CategoriesTable,
+                          TaskRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$CategoriesTableReferences
+                              ._tasksRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$CategoriesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).tasksRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.categoryId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                      if (timerSessionsRefs)
+                        await $_getPrefetchedData<
+                          CategoryRow,
+                          $CategoriesTable,
+                          TimerSessionRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$CategoriesTableReferences
+                              ._timerSessionsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$CategoriesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).timerSessionsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.categoryId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -1351,7 +2324,7 @@ typedef $$CategoriesTableProcessedTableManager =
       $$CategoriesTableUpdateCompanionBuilder,
       (CategoryRow, $$CategoriesTableReferences),
       CategoryRow,
-      PrefetchHooks Function({bool tasksRefs})
+      PrefetchHooks Function({bool tasksRefs, bool timerSessionsRefs})
     >;
 typedef $$TasksTableCreateCompanionBuilder =
     TasksCompanion Function({
@@ -1398,6 +2371,24 @@ final class $$TasksTableReferences
     if (item == null) return manager;
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$TimerSessionsTable, List<TimerSessionRow>>
+  _timerSessionsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.timerSessions,
+    aliasName: $_aliasNameGenerator(db.tasks.id, db.timerSessions.taskId),
+  );
+
+  $$TimerSessionsTableProcessedTableManager get timerSessionsRefs {
+    final manager = $$TimerSessionsTableTableManager(
+      $_db,
+      $_db.timerSessions,
+    ).filter((f) => f.taskId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_timerSessionsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
     );
   }
 }
@@ -1477,6 +2468,31 @@ class $$TasksTableFilterComposer extends Composer<_$AppDatabase, $TasksTable> {
           ),
     );
     return composer;
+  }
+
+  Expression<bool> timerSessionsRefs(
+    Expression<bool> Function($$TimerSessionsTableFilterComposer f) f,
+  ) {
+    final $$TimerSessionsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.timerSessions,
+      getReferencedColumn: (t) => t.taskId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TimerSessionsTableFilterComposer(
+            $db: $db,
+            $table: $db.timerSessions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
   }
 }
 
@@ -1620,6 +2636,31 @@ class $$TasksTableAnnotationComposer
     );
     return composer;
   }
+
+  Expression<T> timerSessionsRefs<T extends Object>(
+    Expression<T> Function($$TimerSessionsTableAnnotationComposer a) f,
+  ) {
+    final $$TimerSessionsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.timerSessions,
+      getReferencedColumn: (t) => t.taskId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TimerSessionsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.timerSessions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$TasksTableTableManager
@@ -1635,7 +2676,7 @@ class $$TasksTableTableManager
           $$TasksTableUpdateCompanionBuilder,
           (TaskRow, $$TasksTableReferences),
           TaskRow,
-          PrefetchHooks Function({bool categoryId})
+          PrefetchHooks Function({bool categoryId, bool timerSessionsRefs})
         > {
   $$TasksTableTableManager(_$AppDatabase db, $TasksTable table)
     : super(
@@ -1702,7 +2743,916 @@ class $$TasksTableTableManager
                     (e.readTable(table), $$TasksTableReferences(db, table, e)),
               )
               .toList(),
-          prefetchHooksCallback: ({categoryId = false}) {
+          prefetchHooksCallback:
+              ({categoryId = false, timerSessionsRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (timerSessionsRefs) db.timerSessions,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (categoryId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.categoryId,
+                                    referencedTable: $$TasksTableReferences
+                                        ._categoryIdTable(db),
+                                    referencedColumn: $$TasksTableReferences
+                                        ._categoryIdTable(db)
+                                        .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (timerSessionsRefs)
+                        await $_getPrefetchedData<
+                          TaskRow,
+                          $TasksTable,
+                          TimerSessionRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$TasksTableReferences
+                              ._timerSessionsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$TasksTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).timerSessionsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.taskId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$TasksTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $TasksTable,
+      TaskRow,
+      $$TasksTableFilterComposer,
+      $$TasksTableOrderingComposer,
+      $$TasksTableAnnotationComposer,
+      $$TasksTableCreateCompanionBuilder,
+      $$TasksTableUpdateCompanionBuilder,
+      (TaskRow, $$TasksTableReferences),
+      TaskRow,
+      PrefetchHooks Function({bool categoryId, bool timerSessionsRefs})
+    >;
+typedef $$TimerSessionsTableCreateCompanionBuilder =
+    TimerSessionsCompanion Function({
+      Value<int> id,
+      Value<int?> taskId,
+      required int categoryId,
+      Value<TimerSessionStatus> status,
+      Value<DateTime> startedAt,
+      Value<DateTime?> completedAt,
+      Value<int> totalDurationSeconds,
+      Value<DateTime?> currentIntervalStartedAt,
+    });
+typedef $$TimerSessionsTableUpdateCompanionBuilder =
+    TimerSessionsCompanion Function({
+      Value<int> id,
+      Value<int?> taskId,
+      Value<int> categoryId,
+      Value<TimerSessionStatus> status,
+      Value<DateTime> startedAt,
+      Value<DateTime?> completedAt,
+      Value<int> totalDurationSeconds,
+      Value<DateTime?> currentIntervalStartedAt,
+    });
+
+final class $$TimerSessionsTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $TimerSessionsTable, TimerSessionRow> {
+  $$TimerSessionsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $TasksTable _taskIdTable(_$AppDatabase db) => db.tasks.createAlias(
+    $_aliasNameGenerator(db.timerSessions.taskId, db.tasks.id),
+  );
+
+  $$TasksTableProcessedTableManager? get taskId {
+    final $_column = $_itemColumn<int>('task_id');
+    if ($_column == null) return null;
+    final manager = $$TasksTableTableManager(
+      $_db,
+      $_db.tasks,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_taskIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $CategoriesTable _categoryIdTable(_$AppDatabase db) =>
+      db.categories.createAlias(
+        $_aliasNameGenerator(db.timerSessions.categoryId, db.categories.id),
+      );
+
+  $$CategoriesTableProcessedTableManager get categoryId {
+    final $_column = $_itemColumn<int>('category_id')!;
+
+    final manager = $$CategoriesTableTableManager(
+      $_db,
+      $_db.categories,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_categoryIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static MultiTypedResultKey<$TimerIntervalsTable, List<TimerIntervalRow>>
+  _timerIntervalsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.timerIntervals,
+    aliasName: $_aliasNameGenerator(
+      db.timerSessions.id,
+      db.timerIntervals.sessionId,
+    ),
+  );
+
+  $$TimerIntervalsTableProcessedTableManager get timerIntervalsRefs {
+    final manager = $$TimerIntervalsTableTableManager(
+      $_db,
+      $_db.timerIntervals,
+    ).filter((f) => f.sessionId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_timerIntervalsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$TimerSessionsTableFilterComposer
+    extends Composer<_$AppDatabase, $TimerSessionsTable> {
+  $$TimerSessionsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnWithTypeConverterFilters<TimerSessionStatus, TimerSessionStatus, String>
+  get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnWithTypeConverterFilters(column),
+  );
+
+  ColumnFilters<DateTime> get startedAt => $composableBuilder(
+    column: $table.startedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get totalDurationSeconds => $composableBuilder(
+    column: $table.totalDurationSeconds,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get currentIntervalStartedAt => $composableBuilder(
+    column: $table.currentIntervalStartedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$TasksTableFilterComposer get taskId {
+    final $$TasksTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.taskId,
+      referencedTable: $db.tasks,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TasksTableFilterComposer(
+            $db: $db,
+            $table: $db.tasks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$CategoriesTableFilterComposer get categoryId {
+    final $$CategoriesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.categories,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CategoriesTableFilterComposer(
+            $db: $db,
+            $table: $db.categories,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<bool> timerIntervalsRefs(
+    Expression<bool> Function($$TimerIntervalsTableFilterComposer f) f,
+  ) {
+    final $$TimerIntervalsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.timerIntervals,
+      getReferencedColumn: (t) => t.sessionId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TimerIntervalsTableFilterComposer(
+            $db: $db,
+            $table: $db.timerIntervals,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$TimerSessionsTableOrderingComposer
+    extends Composer<_$AppDatabase, $TimerSessionsTable> {
+  $$TimerSessionsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get startedAt => $composableBuilder(
+    column: $table.startedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get totalDurationSeconds => $composableBuilder(
+    column: $table.totalDurationSeconds,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get currentIntervalStartedAt => $composableBuilder(
+    column: $table.currentIntervalStartedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$TasksTableOrderingComposer get taskId {
+    final $$TasksTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.taskId,
+      referencedTable: $db.tasks,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TasksTableOrderingComposer(
+            $db: $db,
+            $table: $db.tasks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$CategoriesTableOrderingComposer get categoryId {
+    final $$CategoriesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.categories,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CategoriesTableOrderingComposer(
+            $db: $db,
+            $table: $db.categories,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TimerSessionsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $TimerSessionsTable> {
+  $$TimerSessionsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<TimerSessionStatus, String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get startedAt =>
+      $composableBuilder(column: $table.startedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get completedAt => $composableBuilder(
+    column: $table.completedAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get totalDurationSeconds => $composableBuilder(
+    column: $table.totalDurationSeconds,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get currentIntervalStartedAt => $composableBuilder(
+    column: $table.currentIntervalStartedAt,
+    builder: (column) => column,
+  );
+
+  $$TasksTableAnnotationComposer get taskId {
+    final $$TasksTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.taskId,
+      referencedTable: $db.tasks,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TasksTableAnnotationComposer(
+            $db: $db,
+            $table: $db.tasks,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$CategoriesTableAnnotationComposer get categoryId {
+    final $$CategoriesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.categories,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CategoriesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.categories,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  Expression<T> timerIntervalsRefs<T extends Object>(
+    Expression<T> Function($$TimerIntervalsTableAnnotationComposer a) f,
+  ) {
+    final $$TimerIntervalsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.timerIntervals,
+      getReferencedColumn: (t) => t.sessionId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TimerIntervalsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.timerIntervals,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$TimerSessionsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $TimerSessionsTable,
+          TimerSessionRow,
+          $$TimerSessionsTableFilterComposer,
+          $$TimerSessionsTableOrderingComposer,
+          $$TimerSessionsTableAnnotationComposer,
+          $$TimerSessionsTableCreateCompanionBuilder,
+          $$TimerSessionsTableUpdateCompanionBuilder,
+          (TimerSessionRow, $$TimerSessionsTableReferences),
+          TimerSessionRow,
+          PrefetchHooks Function({
+            bool taskId,
+            bool categoryId,
+            bool timerIntervalsRefs,
+          })
+        > {
+  $$TimerSessionsTableTableManager(_$AppDatabase db, $TimerSessionsTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TimerSessionsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TimerSessionsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TimerSessionsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int?> taskId = const Value.absent(),
+                Value<int> categoryId = const Value.absent(),
+                Value<TimerSessionStatus> status = const Value.absent(),
+                Value<DateTime> startedAt = const Value.absent(),
+                Value<DateTime?> completedAt = const Value.absent(),
+                Value<int> totalDurationSeconds = const Value.absent(),
+                Value<DateTime?> currentIntervalStartedAt =
+                    const Value.absent(),
+              }) => TimerSessionsCompanion(
+                id: id,
+                taskId: taskId,
+                categoryId: categoryId,
+                status: status,
+                startedAt: startedAt,
+                completedAt: completedAt,
+                totalDurationSeconds: totalDurationSeconds,
+                currentIntervalStartedAt: currentIntervalStartedAt,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int?> taskId = const Value.absent(),
+                required int categoryId,
+                Value<TimerSessionStatus> status = const Value.absent(),
+                Value<DateTime> startedAt = const Value.absent(),
+                Value<DateTime?> completedAt = const Value.absent(),
+                Value<int> totalDurationSeconds = const Value.absent(),
+                Value<DateTime?> currentIntervalStartedAt =
+                    const Value.absent(),
+              }) => TimerSessionsCompanion.insert(
+                id: id,
+                taskId: taskId,
+                categoryId: categoryId,
+                status: status,
+                startedAt: startedAt,
+                completedAt: completedAt,
+                totalDurationSeconds: totalDurationSeconds,
+                currentIntervalStartedAt: currentIntervalStartedAt,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$TimerSessionsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback:
+              ({
+                taskId = false,
+                categoryId = false,
+                timerIntervalsRefs = false,
+              }) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (timerIntervalsRefs) db.timerIntervals,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (taskId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.taskId,
+                                    referencedTable:
+                                        $$TimerSessionsTableReferences
+                                            ._taskIdTable(db),
+                                    referencedColumn:
+                                        $$TimerSessionsTableReferences
+                                            ._taskIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+                        if (categoryId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.categoryId,
+                                    referencedTable:
+                                        $$TimerSessionsTableReferences
+                                            ._categoryIdTable(db),
+                                    referencedColumn:
+                                        $$TimerSessionsTableReferences
+                                            ._categoryIdTable(db)
+                                            .id,
+                                  )
+                                  as T;
+                        }
+
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (timerIntervalsRefs)
+                        await $_getPrefetchedData<
+                          TimerSessionRow,
+                          $TimerSessionsTable,
+                          TimerIntervalRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$TimerSessionsTableReferences
+                              ._timerIntervalsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$TimerSessionsTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).timerIntervalsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.sessionId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
+              },
+        ),
+      );
+}
+
+typedef $$TimerSessionsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $TimerSessionsTable,
+      TimerSessionRow,
+      $$TimerSessionsTableFilterComposer,
+      $$TimerSessionsTableOrderingComposer,
+      $$TimerSessionsTableAnnotationComposer,
+      $$TimerSessionsTableCreateCompanionBuilder,
+      $$TimerSessionsTableUpdateCompanionBuilder,
+      (TimerSessionRow, $$TimerSessionsTableReferences),
+      TimerSessionRow,
+      PrefetchHooks Function({
+        bool taskId,
+        bool categoryId,
+        bool timerIntervalsRefs,
+      })
+    >;
+typedef $$TimerIntervalsTableCreateCompanionBuilder =
+    TimerIntervalsCompanion Function({
+      Value<int> id,
+      required int sessionId,
+      required DateTime startedAt,
+      Value<DateTime?> endedAt,
+    });
+typedef $$TimerIntervalsTableUpdateCompanionBuilder =
+    TimerIntervalsCompanion Function({
+      Value<int> id,
+      Value<int> sessionId,
+      Value<DateTime> startedAt,
+      Value<DateTime?> endedAt,
+    });
+
+final class $$TimerIntervalsTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $TimerIntervalsTable, TimerIntervalRow> {
+  $$TimerIntervalsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $TimerSessionsTable _sessionIdTable(_$AppDatabase db) =>
+      db.timerSessions.createAlias(
+        $_aliasNameGenerator(db.timerIntervals.sessionId, db.timerSessions.id),
+      );
+
+  $$TimerSessionsTableProcessedTableManager get sessionId {
+    final $_column = $_itemColumn<int>('session_id')!;
+
+    final manager = $$TimerSessionsTableTableManager(
+      $_db,
+      $_db.timerSessions,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_sessionIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$TimerIntervalsTableFilterComposer
+    extends Composer<_$AppDatabase, $TimerIntervalsTable> {
+  $$TimerIntervalsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get startedAt => $composableBuilder(
+    column: $table.startedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get endedAt => $composableBuilder(
+    column: $table.endedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$TimerSessionsTableFilterComposer get sessionId {
+    final $$TimerSessionsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.sessionId,
+      referencedTable: $db.timerSessions,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TimerSessionsTableFilterComposer(
+            $db: $db,
+            $table: $db.timerSessions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TimerIntervalsTableOrderingComposer
+    extends Composer<_$AppDatabase, $TimerIntervalsTable> {
+  $$TimerIntervalsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get startedAt => $composableBuilder(
+    column: $table.startedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get endedAt => $composableBuilder(
+    column: $table.endedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$TimerSessionsTableOrderingComposer get sessionId {
+    final $$TimerSessionsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.sessionId,
+      referencedTable: $db.timerSessions,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TimerSessionsTableOrderingComposer(
+            $db: $db,
+            $table: $db.timerSessions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TimerIntervalsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $TimerIntervalsTable> {
+  $$TimerIntervalsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get startedAt =>
+      $composableBuilder(column: $table.startedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get endedAt =>
+      $composableBuilder(column: $table.endedAt, builder: (column) => column);
+
+  $$TimerSessionsTableAnnotationComposer get sessionId {
+    final $$TimerSessionsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.sessionId,
+      referencedTable: $db.timerSessions,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TimerSessionsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.timerSessions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TimerIntervalsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $TimerIntervalsTable,
+          TimerIntervalRow,
+          $$TimerIntervalsTableFilterComposer,
+          $$TimerIntervalsTableOrderingComposer,
+          $$TimerIntervalsTableAnnotationComposer,
+          $$TimerIntervalsTableCreateCompanionBuilder,
+          $$TimerIntervalsTableUpdateCompanionBuilder,
+          (TimerIntervalRow, $$TimerIntervalsTableReferences),
+          TimerIntervalRow,
+          PrefetchHooks Function({bool sessionId})
+        > {
+  $$TimerIntervalsTableTableManager(
+    _$AppDatabase db,
+    $TimerIntervalsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TimerIntervalsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TimerIntervalsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TimerIntervalsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<int> sessionId = const Value.absent(),
+                Value<DateTime> startedAt = const Value.absent(),
+                Value<DateTime?> endedAt = const Value.absent(),
+              }) => TimerIntervalsCompanion(
+                id: id,
+                sessionId: sessionId,
+                startedAt: startedAt,
+                endedAt: endedAt,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required int sessionId,
+                required DateTime startedAt,
+                Value<DateTime?> endedAt = const Value.absent(),
+              }) => TimerIntervalsCompanion.insert(
+                id: id,
+                sessionId: sessionId,
+                startedAt: startedAt,
+                endedAt: endedAt,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$TimerIntervalsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({sessionId = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [],
@@ -1722,16 +3672,17 @@ class $$TasksTableTableManager
                       dynamic
                     >
                   >(state) {
-                    if (categoryId) {
+                    if (sessionId) {
                       state =
                           state.withJoin(
                                 currentTable: table,
-                                currentColumn: table.categoryId,
-                                referencedTable: $$TasksTableReferences
-                                    ._categoryIdTable(db),
-                                referencedColumn: $$TasksTableReferences
-                                    ._categoryIdTable(db)
-                                    .id,
+                                currentColumn: table.sessionId,
+                                referencedTable: $$TimerIntervalsTableReferences
+                                    ._sessionIdTable(db),
+                                referencedColumn:
+                                    $$TimerIntervalsTableReferences
+                                        ._sessionIdTable(db)
+                                        .id,
                               )
                               as T;
                     }
@@ -1747,19 +3698,19 @@ class $$TasksTableTableManager
       );
 }
 
-typedef $$TasksTableProcessedTableManager =
+typedef $$TimerIntervalsTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
-      $TasksTable,
-      TaskRow,
-      $$TasksTableFilterComposer,
-      $$TasksTableOrderingComposer,
-      $$TasksTableAnnotationComposer,
-      $$TasksTableCreateCompanionBuilder,
-      $$TasksTableUpdateCompanionBuilder,
-      (TaskRow, $$TasksTableReferences),
-      TaskRow,
-      PrefetchHooks Function({bool categoryId})
+      $TimerIntervalsTable,
+      TimerIntervalRow,
+      $$TimerIntervalsTableFilterComposer,
+      $$TimerIntervalsTableOrderingComposer,
+      $$TimerIntervalsTableAnnotationComposer,
+      $$TimerIntervalsTableCreateCompanionBuilder,
+      $$TimerIntervalsTableUpdateCompanionBuilder,
+      (TimerIntervalRow, $$TimerIntervalsTableReferences),
+      TimerIntervalRow,
+      PrefetchHooks Function({bool sessionId})
     >;
 
 class $AppDatabaseManager {
@@ -1769,4 +3720,8 @@ class $AppDatabaseManager {
       $$CategoriesTableTableManager(_db, _db.categories);
   $$TasksTableTableManager get tasks =>
       $$TasksTableTableManager(_db, _db.tasks);
+  $$TimerSessionsTableTableManager get timerSessions =>
+      $$TimerSessionsTableTableManager(_db, _db.timerSessions);
+  $$TimerIntervalsTableTableManager get timerIntervals =>
+      $$TimerIntervalsTableTableManager(_db, _db.timerIntervals);
 }

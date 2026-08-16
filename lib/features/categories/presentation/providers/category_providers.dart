@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -41,4 +42,12 @@ SetCategoryArchived setCategoryArchivedUseCase(Ref ref) {
 @riverpod
 Stream<List<Category>> categoriesList(Ref ref, {bool includeArchived = false}) {
   return ref.watch(watchCategoriesUseCaseProvider)(includeArchived: includeArchived);
+}
+
+@riverpod
+Stream<Category?> categoryById(Ref ref, int id) {
+  return ref
+      .watch(categoryRepositoryProvider)
+      .watchAll(includeArchived: true)
+      .map((categories) => categories.firstWhereOrNull((c) => c.id == id));
 }
