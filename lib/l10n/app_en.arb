@@ -1,0 +1,22 @@
+{
+  "@@locale": "en",
+  "appTitle": "HiperFoco",
+  "@appTitle": {
+    "description": "The application name, shown in the OS and app bar"
+  },
+  "navHome": "Home",
+  "navTasks": "Tasks",
+  "navCalendar": "Calendar",
+  "navStats": "Stats",
+  "navSettings": "Settings",
+  "settingsTitle": "Settings",
+  "settingsAppearance": "Appearance",
+  "settingsTheme": "Theme",
+  "settingsThemeLight": "Light",
+  "settingsThemeDark": "Dark",
+  "settingsThemeSystem": "System",
+  "settingsLanguage": "Language",
+  "languagePortuguese": "Portuguese",
+  "languageEnglish": "English",
+  "comingSoon": "Coming soon"
+}

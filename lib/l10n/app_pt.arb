@@ -1,0 +1,19 @@
+{
+  "@@locale": "pt",
+  "appTitle": "HiperFoco",
+  "navHome": "Início",
+  "navTasks": "Tarefas",
+  "navCalendar": "Calendário",
+  "navStats": "Estatísticas",
+  "navSettings": "Ajustes",
+  "settingsTitle": "Ajustes",
+  "settingsAppearance": "Aparência",
+  "settingsTheme": "Tema",
+  "settingsThemeLight": "Claro",
+  "settingsThemeDark": "Escuro",
+  "settingsThemeSystem": "Sistema",
+  "settingsLanguage": "Idioma",
+  "languagePortuguese": "Português",
+  "languageEnglish": "Inglês",
+  "comingSoon": "Em breve"
+}
