@@ -3,11 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../features/categories/presentation/screens/categories_list_screen.dart';
 import '../../features/tasks/presentation/screens/calendar_screen.dart';
-import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
 import '../../features/statistics/presentation/screens/statistics_screen.dart';
-import '../../features/tasks/presentation/screens/tasks_screen.dart';
+import '../../features/tasks/presentation/screens/tasks_list_screen.dart';
 import '../../l10n/app_localizations.dart';
 
 part 'app_router.g.dart';
@@ -70,10 +70,13 @@ GoRouter appRouter(Ref ref) {
             _AppShell(navigationShell: navigationShell),
         branches: [
           StatefulShellBranch(routes: [
-            GoRoute(path: '/home', builder: (_, _) => const HomeScreen()),
+            GoRoute(
+                path: '/home',
+                builder: (_, _) => const CategoriesListScreen()),
           ]),
           StatefulShellBranch(routes: [
-            GoRoute(path: '/tasks', builder: (_, _) => const TasksScreen()),
+            GoRoute(
+                path: '/tasks', builder: (_, _) => const TasksListScreen()),
           ]),
           StatefulShellBranch(routes: [
             GoRoute(

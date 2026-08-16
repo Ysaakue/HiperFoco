@@ -15,5 +15,40 @@
   "settingsLanguage": "Idioma",
   "languagePortuguese": "Português",
   "languageEnglish": "Inglês",
-  "comingSoon": "Em breve"
+  "comingSoon": "Em breve",
+  "save": "Salvar",
+  "cancel": "Cancelar",
+  "delete": "Excluir",
+  "requiredField": "Este campo é obrigatório",
+  "noCategoriesYet": "Nenhuma categoria ainda. Toque em + para criar.",
+  "addCategory": "Adicionar categoria",
+  "editCategory": "Editar categoria",
+  "categoryName": "Nome",
+  "categoryColor": "Cor",
+  "categoryIcon": "Ícone",
+  "categoryArchive": "Arquivar",
+  "categoryUnarchive": "Desarquivar",
+  "showArchivedCategories": "Mostrar categorias arquivadas",
+  "hideArchivedCategories": "Ocultar categorias arquivadas",
+  "noArchivedCategories": "Nenhuma categoria arquivada.",
+  "noTasksYet": "Nenhuma tarefa ainda. Toque em + para criar.",
+  "noPendingTasks": "Nenhuma tarefa pendente.",
+  "showCompletedTasks": "Mostrar tarefas concluídas",
+  "hideCompletedTasks": "Ocultar tarefas concluídas",
+  "addTask": "Adicionar tarefa",
+  "editTask": "Editar tarefa",
+  "taskTitle": "Título",
+  "taskDescription": "Descrição",
+  "taskCategory": "Categoria",
+  "taskDueDate": "Data limite",
+  "noDueDate": "Sem data limite",
+  "deleteTask": "Excluir tarefa",
+  "deleteTaskConfirm": "Tem certeza que deseja excluir \"{title}\"?",
+  "@deleteTaskConfirm": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  }
 }

@@ -18,5 +18,40 @@
   "settingsLanguage": "Language",
   "languagePortuguese": "Portuguese",
   "languageEnglish": "English",
-  "comingSoon": "Coming soon"
+  "comingSoon": "Coming soon",
+  "save": "Save",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "requiredField": "This field is required",
+  "noCategoriesYet": "No categories yet. Tap + to create one.",
+  "addCategory": "Add category",
+  "editCategory": "Edit category",
+  "categoryName": "Name",
+  "categoryColor": "Color",
+  "categoryIcon": "Icon",
+  "categoryArchive": "Archive",
+  "categoryUnarchive": "Unarchive",
+  "showArchivedCategories": "Show archived categories",
+  "hideArchivedCategories": "Hide archived categories",
+  "noArchivedCategories": "No archived categories.",
+  "noTasksYet": "No tasks yet. Tap + to create one.",
+  "noPendingTasks": "No pending tasks.",
+  "showCompletedTasks": "Show completed tasks",
+  "hideCompletedTasks": "Hide completed tasks",
+  "addTask": "Add task",
+  "editTask": "Edit task",
+  "taskTitle": "Title",
+  "taskDescription": "Description",
+  "taskCategory": "Category",
+  "taskDueDate": "Due date",
+  "noDueDate": "No due date",
+  "deleteTask": "Delete task",
+  "deleteTaskConfirm": "Are you sure you want to delete \"{title}\"?",
+  "@deleteTaskConfirm": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  }
 }

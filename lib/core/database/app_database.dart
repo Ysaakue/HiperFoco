@@ -5,16 +5,34 @@ import 'package:drift/native.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
+import '../../features/tasks/domain/entities/task_status.dart';
+import 'daos/category_dao.dart';
+import 'daos/task_dao.dart';
+import 'tables/categories_table.dart';
+import 'tables/tasks_table.dart';
+
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: [])
+@DriftDatabase(
+  tables: [Categories, Tasks],
+  daos: [CategoryDao, TaskDao],
+)
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   AppDatabase.forTesting(super.executor);
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
+
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+        onCreate: (m) => m.createAll(),
+        onUpgrade: (m, from, to) async {
+          // Pre-release app: no persisted data worth preserving yet.
+          await m.createAll();
+        },
+      );
 
   static LazyDatabase _openConnection() {
     return LazyDatabase(() async {

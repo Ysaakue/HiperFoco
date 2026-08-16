@@ -55,4 +55,91 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get comingSoon => 'Em breve';
+
+  @override
+  String get save => 'Salvar';
+
+  @override
+  String get cancel => 'Cancelar';
+
+  @override
+  String get delete => 'Excluir';
+
+  @override
+  String get requiredField => 'Este campo é obrigatório';
+
+  @override
+  String get noCategoriesYet =>
+      'Nenhuma categoria ainda. Toque em + para criar.';
+
+  @override
+  String get addCategory => 'Adicionar categoria';
+
+  @override
+  String get editCategory => 'Editar categoria';
+
+  @override
+  String get categoryName => 'Nome';
+
+  @override
+  String get categoryColor => 'Cor';
+
+  @override
+  String get categoryIcon => 'Ícone';
+
+  @override
+  String get categoryArchive => 'Arquivar';
+
+  @override
+  String get categoryUnarchive => 'Desarquivar';
+
+  @override
+  String get showArchivedCategories => 'Mostrar categorias arquivadas';
+
+  @override
+  String get hideArchivedCategories => 'Ocultar categorias arquivadas';
+
+  @override
+  String get noArchivedCategories => 'Nenhuma categoria arquivada.';
+
+  @override
+  String get noTasksYet => 'Nenhuma tarefa ainda. Toque em + para criar.';
+
+  @override
+  String get noPendingTasks => 'Nenhuma tarefa pendente.';
+
+  @override
+  String get showCompletedTasks => 'Mostrar tarefas concluídas';
+
+  @override
+  String get hideCompletedTasks => 'Ocultar tarefas concluídas';
+
+  @override
+  String get addTask => 'Adicionar tarefa';
+
+  @override
+  String get editTask => 'Editar tarefa';
+
+  @override
+  String get taskTitle => 'Título';
+
+  @override
+  String get taskDescription => 'Descrição';
+
+  @override
+  String get taskCategory => 'Categoria';
+
+  @override
+  String get taskDueDate => 'Data limite';
+
+  @override
+  String get noDueDate => 'Sem data limite';
+
+  @override
+  String get deleteTask => 'Excluir tarefa';
+
+  @override
+  String deleteTaskConfirm(String title) {
+    return 'Tem certeza que deseja excluir \"$title\"?';
+  }
 }

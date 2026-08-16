@@ -193,6 +193,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Coming soon'**
   String get comingSoon;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @requiredField.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get requiredField;
+
+  /// No description provided for @noCategoriesYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No categories yet. Tap + to create one.'**
+  String get noCategoriesYet;
+
+  /// No description provided for @addCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Add category'**
+  String get addCategory;
+
+  /// No description provided for @editCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit category'**
+  String get editCategory;
+
+  /// No description provided for @categoryName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get categoryName;
+
+  /// No description provided for @categoryColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Color'**
+  String get categoryColor;
+
+  /// No description provided for @categoryIcon.
+  ///
+  /// In en, this message translates to:
+  /// **'Icon'**
+  String get categoryIcon;
+
+  /// No description provided for @categoryArchive.
+  ///
+  /// In en, this message translates to:
+  /// **'Archive'**
+  String get categoryArchive;
+
+  /// No description provided for @categoryUnarchive.
+  ///
+  /// In en, this message translates to:
+  /// **'Unarchive'**
+  String get categoryUnarchive;
+
+  /// No description provided for @showArchivedCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Show archived categories'**
+  String get showArchivedCategories;
+
+  /// No description provided for @hideArchivedCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide archived categories'**
+  String get hideArchivedCategories;
+
+  /// No description provided for @noArchivedCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'No archived categories.'**
+  String get noArchivedCategories;
+
+  /// No description provided for @noTasksYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No tasks yet. Tap + to create one.'**
+  String get noTasksYet;
+
+  /// No description provided for @noPendingTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'No pending tasks.'**
+  String get noPendingTasks;
+
+  /// No description provided for @showCompletedTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Show completed tasks'**
+  String get showCompletedTasks;
+
+  /// No description provided for @hideCompletedTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide completed tasks'**
+  String get hideCompletedTasks;
+
+  /// No description provided for @addTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Add task'**
+  String get addTask;
+
+  /// No description provided for @editTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit task'**
+  String get editTask;
+
+  /// No description provided for @taskTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get taskTitle;
+
+  /// No description provided for @taskDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get taskDescription;
+
+  /// No description provided for @taskCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get taskCategory;
+
+  /// No description provided for @taskDueDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Due date'**
+  String get taskDueDate;
+
+  /// No description provided for @noDueDate.
+  ///
+  /// In en, this message translates to:
+  /// **'No due date'**
+  String get noDueDate;
+
+  /// No description provided for @deleteTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete task'**
+  String get deleteTask;
+
+  /// No description provided for @deleteTaskConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete \"{title}\"?'**
+  String deleteTaskConfirm(String title);
 }
 
 class _AppLocalizationsDelegate
