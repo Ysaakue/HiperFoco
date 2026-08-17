@@ -91,5 +91,65 @@
       }
     }
   },
-  "settingsPurgeDone": "Dados antigos excluídos."
+  "settingsPurgeDone": "Dados antigos excluídos.",
+  "taskRepeat": "Repetir",
+  "recurrenceFrequencyDaily": "Diariamente",
+  "recurrenceFrequencyWeekly": "Semanalmente",
+  "recurrenceFrequencyMonthly": "Mensalmente",
+  "recurrenceEvery": "A cada",
+  "recurrenceIntervalUnitDaily": "{interval, plural, one{dia} other{dias}}",
+  "@recurrenceIntervalUnitDaily": {
+    "placeholders": {
+      "interval": {
+        "type": "int"
+      }
+    }
+  },
+  "recurrenceIntervalUnitWeekly": "{interval, plural, one{semana} other{semanas}}",
+  "@recurrenceIntervalUnitWeekly": {
+    "placeholders": {
+      "interval": {
+        "type": "int"
+      }
+    }
+  },
+  "recurrenceIntervalUnitMonthly": "{interval, plural, one{mês} other{meses}}",
+  "@recurrenceIntervalUnitMonthly": {
+    "placeholders": {
+      "interval": {
+        "type": "int"
+      }
+    }
+  },
+  "recurrenceWeekdayMon": "Seg",
+  "recurrenceWeekdayTue": "Ter",
+  "recurrenceWeekdayWed": "Qua",
+  "recurrenceWeekdayThu": "Qui",
+  "recurrenceWeekdayFri": "Sex",
+  "recurrenceWeekdaySat": "Sáb",
+  "recurrenceWeekdaySun": "Dom",
+  "recurrenceEndDate": "Termina",
+  "recurrenceNoEndDate": "Nunca",
+  "taskReminder": "Lembrar",
+  "reminderOffsetAtTime": "No horário",
+  "reminderOffset10": "10 minutos antes",
+  "reminderOffset30": "30 minutos antes",
+  "reminderOffset60": "1 hora antes",
+  "reminderOffset1440": "1 dia antes",
+  "notificationPermissionDenied": "As notificações estão desativadas. Os lembretes não vão te avisar até você ativá-las nas configurações do sistema.",
+  "calendarNoTasksForDay": "Nenhuma tarefa neste dia.",
+  "calendarTrackedTime": "Tempo cronometrado",
+  "calendarMarkDone": "Marcar como concluída",
+  "calendarMarkPending": "Marcar como pendente",
+  "calendarSkip": "Pular",
+  "calendarReset": "Redefinir",
+  "calendarSkipped": "Pulada",
+  "remindersTitle": "Lembretes",
+  "addReminder": "Adicionar lembrete",
+  "editReminder": "Editar lembrete",
+  "noRemindersYet": "Nenhum lembrete ainda. Toque em + para criar.",
+  "reminderMessage": "Mensagem",
+  "reminderScheduledAt": "Data e hora",
+  "deleteReminder": "Excluir lembrete",
+  "deleteReminderConfirm": "Tem certeza que deseja excluir este lembrete?"
 }

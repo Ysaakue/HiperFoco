@@ -226,4 +226,147 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get settingsPurgeDone => 'Dados antigos excluídos.';
+
+  @override
+  String get taskRepeat => 'Repetir';
+
+  @override
+  String get recurrenceFrequencyDaily => 'Diariamente';
+
+  @override
+  String get recurrenceFrequencyWeekly => 'Semanalmente';
+
+  @override
+  String get recurrenceFrequencyMonthly => 'Mensalmente';
+
+  @override
+  String get recurrenceEvery => 'A cada';
+
+  @override
+  String recurrenceIntervalUnitDaily(int interval) {
+    String _temp0 = intl.Intl.pluralLogic(
+      interval,
+      locale: localeName,
+      other: 'dias',
+      one: 'dia',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recurrenceIntervalUnitWeekly(int interval) {
+    String _temp0 = intl.Intl.pluralLogic(
+      interval,
+      locale: localeName,
+      other: 'semanas',
+      one: 'semana',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String recurrenceIntervalUnitMonthly(int interval) {
+    String _temp0 = intl.Intl.pluralLogic(
+      interval,
+      locale: localeName,
+      other: 'meses',
+      one: 'mês',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get recurrenceWeekdayMon => 'Seg';
+
+  @override
+  String get recurrenceWeekdayTue => 'Ter';
+
+  @override
+  String get recurrenceWeekdayWed => 'Qua';
+
+  @override
+  String get recurrenceWeekdayThu => 'Qui';
+
+  @override
+  String get recurrenceWeekdayFri => 'Sex';
+
+  @override
+  String get recurrenceWeekdaySat => 'Sáb';
+
+  @override
+  String get recurrenceWeekdaySun => 'Dom';
+
+  @override
+  String get recurrenceEndDate => 'Termina';
+
+  @override
+  String get recurrenceNoEndDate => 'Nunca';
+
+  @override
+  String get taskReminder => 'Lembrar';
+
+  @override
+  String get reminderOffsetAtTime => 'No horário';
+
+  @override
+  String get reminderOffset10 => '10 minutos antes';
+
+  @override
+  String get reminderOffset30 => '30 minutos antes';
+
+  @override
+  String get reminderOffset60 => '1 hora antes';
+
+  @override
+  String get reminderOffset1440 => '1 dia antes';
+
+  @override
+  String get notificationPermissionDenied =>
+      'As notificações estão desativadas. Os lembretes não vão te avisar até você ativá-las nas configurações do sistema.';
+
+  @override
+  String get calendarNoTasksForDay => 'Nenhuma tarefa neste dia.';
+
+  @override
+  String get calendarTrackedTime => 'Tempo cronometrado';
+
+  @override
+  String get calendarMarkDone => 'Marcar como concluída';
+
+  @override
+  String get calendarMarkPending => 'Marcar como pendente';
+
+  @override
+  String get calendarSkip => 'Pular';
+
+  @override
+  String get calendarReset => 'Redefinir';
+
+  @override
+  String get calendarSkipped => 'Pulada';
+
+  @override
+  String get remindersTitle => 'Lembretes';
+
+  @override
+  String get addReminder => 'Adicionar lembrete';
+
+  @override
+  String get editReminder => 'Editar lembrete';
+
+  @override
+  String get noRemindersYet => 'Nenhum lembrete ainda. Toque em + para criar.';
+
+  @override
+  String get reminderMessage => 'Mensagem';
+
+  @override
+  String get reminderScheduledAt => 'Data e hora';
+
+  @override
+  String get deleteReminder => 'Excluir lembrete';
+
+  @override
+  String get deleteReminderConfirm =>
+      'Tem certeza que deseja excluir este lembrete?';
 }

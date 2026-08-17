@@ -481,6 +481,240 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Old data purged.'**
   String get settingsPurgeDone;
+
+  /// No description provided for @taskRepeat.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat'**
+  String get taskRepeat;
+
+  /// No description provided for @recurrenceFrequencyDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get recurrenceFrequencyDaily;
+
+  /// No description provided for @recurrenceFrequencyWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get recurrenceFrequencyWeekly;
+
+  /// No description provided for @recurrenceFrequencyMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get recurrenceFrequencyMonthly;
+
+  /// No description provided for @recurrenceEvery.
+  ///
+  /// In en, this message translates to:
+  /// **'Every'**
+  String get recurrenceEvery;
+
+  /// No description provided for @recurrenceIntervalUnitDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'{interval, plural, one{day} other{days}}'**
+  String recurrenceIntervalUnitDaily(int interval);
+
+  /// No description provided for @recurrenceIntervalUnitWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'{interval, plural, one{week} other{weeks}}'**
+  String recurrenceIntervalUnitWeekly(int interval);
+
+  /// No description provided for @recurrenceIntervalUnitMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'{interval, plural, one{month} other{months}}'**
+  String recurrenceIntervalUnitMonthly(int interval);
+
+  /// No description provided for @recurrenceWeekdayMon.
+  ///
+  /// In en, this message translates to:
+  /// **'Mon'**
+  String get recurrenceWeekdayMon;
+
+  /// No description provided for @recurrenceWeekdayTue.
+  ///
+  /// In en, this message translates to:
+  /// **'Tue'**
+  String get recurrenceWeekdayTue;
+
+  /// No description provided for @recurrenceWeekdayWed.
+  ///
+  /// In en, this message translates to:
+  /// **'Wed'**
+  String get recurrenceWeekdayWed;
+
+  /// No description provided for @recurrenceWeekdayThu.
+  ///
+  /// In en, this message translates to:
+  /// **'Thu'**
+  String get recurrenceWeekdayThu;
+
+  /// No description provided for @recurrenceWeekdayFri.
+  ///
+  /// In en, this message translates to:
+  /// **'Fri'**
+  String get recurrenceWeekdayFri;
+
+  /// No description provided for @recurrenceWeekdaySat.
+  ///
+  /// In en, this message translates to:
+  /// **'Sat'**
+  String get recurrenceWeekdaySat;
+
+  /// No description provided for @recurrenceWeekdaySun.
+  ///
+  /// In en, this message translates to:
+  /// **'Sun'**
+  String get recurrenceWeekdaySun;
+
+  /// No description provided for @recurrenceEndDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Ends'**
+  String get recurrenceEndDate;
+
+  /// No description provided for @recurrenceNoEndDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Never'**
+  String get recurrenceNoEndDate;
+
+  /// No description provided for @taskReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Remind me'**
+  String get taskReminder;
+
+  /// No description provided for @reminderOffsetAtTime.
+  ///
+  /// In en, this message translates to:
+  /// **'At the due time'**
+  String get reminderOffsetAtTime;
+
+  /// No description provided for @reminderOffset10.
+  ///
+  /// In en, this message translates to:
+  /// **'10 minutes before'**
+  String get reminderOffset10;
+
+  /// No description provided for @reminderOffset30.
+  ///
+  /// In en, this message translates to:
+  /// **'30 minutes before'**
+  String get reminderOffset30;
+
+  /// No description provided for @reminderOffset60.
+  ///
+  /// In en, this message translates to:
+  /// **'1 hour before'**
+  String get reminderOffset60;
+
+  /// No description provided for @reminderOffset1440.
+  ///
+  /// In en, this message translates to:
+  /// **'1 day before'**
+  String get reminderOffset1440;
+
+  /// No description provided for @notificationPermissionDenied.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are disabled. Reminders won\'t alert you until you enable them in system settings.'**
+  String get notificationPermissionDenied;
+
+  /// No description provided for @calendarNoTasksForDay.
+  ///
+  /// In en, this message translates to:
+  /// **'No tasks on this day.'**
+  String get calendarNoTasksForDay;
+
+  /// No description provided for @calendarTrackedTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Tracked time'**
+  String get calendarTrackedTime;
+
+  /// No description provided for @calendarMarkDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark done'**
+  String get calendarMarkDone;
+
+  /// No description provided for @calendarMarkPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark pending'**
+  String get calendarMarkPending;
+
+  /// No description provided for @calendarSkip.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip'**
+  String get calendarSkip;
+
+  /// No description provided for @calendarReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get calendarReset;
+
+  /// No description provided for @calendarSkipped.
+  ///
+  /// In en, this message translates to:
+  /// **'Skipped'**
+  String get calendarSkipped;
+
+  /// No description provided for @remindersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders'**
+  String get remindersTitle;
+
+  /// No description provided for @addReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Add reminder'**
+  String get addReminder;
+
+  /// No description provided for @editReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit reminder'**
+  String get editReminder;
+
+  /// No description provided for @noRemindersYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No reminders yet. Tap + to create one.'**
+  String get noRemindersYet;
+
+  /// No description provided for @reminderMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Message'**
+  String get reminderMessage;
+
+  /// No description provided for @reminderScheduledAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Date & time'**
+  String get reminderScheduledAt;
+
+  /// No description provided for @deleteReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete reminder'**
+  String get deleteReminder;
+
+  /// No description provided for @deleteReminderConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this reminder?'**
+  String get deleteReminderConfirm;
 }
 
 class _AppLocalizationsDelegate

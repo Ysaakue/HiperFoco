@@ -1,6 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hiperfoco/features/tasks/domain/entities/task.dart';
 import 'package:hiperfoco/features/tasks/domain/entities/task_status.dart';
+import 'package:hiperfoco/features/tasks/domain/repositories/reminder_repository.dart';
+import 'package:hiperfoco/features/tasks/domain/repositories/task_occurrence_override_repository.dart';
 import 'package:hiperfoco/features/tasks/domain/repositories/task_repository.dart';
 import 'package:hiperfoco/features/tasks/domain/usecases/create_task.dart';
 import 'package:hiperfoco/features/tasks/domain/usecases/delete_task.dart';
@@ -10,6 +12,11 @@ import 'package:hiperfoco/features/tasks/domain/usecases/watch_tasks.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockTaskRepository extends Mock implements TaskRepository {}
+
+class MockReminderRepository extends Mock implements ReminderRepository {}
+
+class MockTaskOccurrenceOverrideRepository extends Mock
+    implements TaskOccurrenceOverrideRepository {}
 
 void main() {
   late MockTaskRepository repository;
@@ -90,12 +97,27 @@ void main() {
   });
 
   group('DeleteTask', () {
-    test('delegates to repository.delete', () async {
+    late MockReminderRepository reminderRepository;
+    late MockTaskOccurrenceOverrideRepository overrideRepository;
+
+    setUp(() {
+      reminderRepository = MockReminderRepository();
+      overrideRepository = MockTaskOccurrenceOverrideRepository();
+    });
+
+    test('deletes the task\'s reminder and overrides before the task itself',
+        () async {
+      when(() => reminderRepository.deleteForTask(1)).thenAnswer((_) async {});
+      when(() => overrideRepository.deleteForTask(1)).thenAnswer((_) async {});
       when(() => repository.delete(1)).thenAnswer((_) async {});
 
-      await DeleteTask(repository)(1);
+      await DeleteTask(repository, reminderRepository, overrideRepository)(1);
 
-      verify(() => repository.delete(1)).called(1);
+      verifyInOrder([
+        () => reminderRepository.deleteForTask(1),
+        () => overrideRepository.deleteForTask(1),
+        () => repository.delete(1),
+      ]);
     });
   });
 }

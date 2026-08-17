@@ -9,6 +9,7 @@ import '../../domain/entities/task.dart';
 import '../../domain/entities/task_status.dart';
 import '../providers/task_providers.dart';
 import '../widgets/task_tile.dart';
+import 'reminders_list_screen.dart';
 import 'task_form_screen.dart';
 
 class TasksListScreen extends ConsumerStatefulWidget {
@@ -32,6 +33,13 @@ class _TasksListScreenState extends ConsumerState<TasksListScreen> {
       appBar: AppBar(
         title: Text(l10n.navTasks),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications_outlined),
+            tooltip: l10n.remindersTitle,
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const RemindersListScreen()),
+            ),
+          ),
           IconButton(
             icon: Icon(
               _hideCompleted ? Icons.visibility_outlined : Icons.visibility_off_outlined,

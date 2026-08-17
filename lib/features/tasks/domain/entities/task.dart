@@ -2,6 +2,12 @@ import 'package:equatable/equatable.dart';
 
 import 'task_status.dart';
 
+/// Sentinel default for [Task.copyWith]'s nullable fields, distinguishing
+/// "not provided, keep current value" from "explicitly provided as null,
+/// clear it" — a plain `field ?? this.field` fallback can never express the
+/// latter.
+const _unset = Object();
+
 class Task extends Equatable {
   const Task({
     required this.id,
@@ -10,6 +16,7 @@ class Task extends Equatable {
     required this.categoryId,
     required this.status,
     this.dueDate,
+    this.recurrenceRuleId,
     required this.sortOrder,
     required this.createdAt,
     required this.updatedAt,
@@ -22,34 +29,44 @@ class Task extends Equatable {
   final int categoryId;
   final TaskStatus status;
   final DateTime? dueDate;
+  final int? recurrenceRuleId;
   final int sortOrder;
   final DateTime createdAt;
   final DateTime updatedAt;
   final DateTime? completedAt;
 
   bool get isCompleted => status == TaskStatus.completed;
+  bool get isRecurring => recurrenceRuleId != null;
 
   Task copyWith({
     String? title,
-    String? description,
+    Object? description = _unset,
     int? categoryId,
     TaskStatus? status,
-    DateTime? dueDate,
+    Object? dueDate = _unset,
+    Object? recurrenceRuleId = _unset,
     int? sortOrder,
     DateTime? updatedAt,
-    DateTime? completedAt,
+    Object? completedAt = _unset,
   }) {
     return Task(
       id: id,
       title: title ?? this.title,
-      description: description ?? this.description,
+      description: identical(description, _unset)
+          ? this.description
+          : description as String?,
       categoryId: categoryId ?? this.categoryId,
       status: status ?? this.status,
-      dueDate: dueDate ?? this.dueDate,
+      dueDate: identical(dueDate, _unset) ? this.dueDate : dueDate as DateTime?,
+      recurrenceRuleId: identical(recurrenceRuleId, _unset)
+          ? this.recurrenceRuleId
+          : recurrenceRuleId as int?,
       sortOrder: sortOrder ?? this.sortOrder,
       createdAt: createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
-      completedAt: completedAt ?? this.completedAt,
+      completedAt: identical(completedAt, _unset)
+          ? this.completedAt
+          : completedAt as DateTime?,
     );
   }
 
@@ -61,6 +78,7 @@ class Task extends Equatable {
         categoryId,
         status,
         dueDate,
+        recurrenceRuleId,
         sortOrder,
         createdAt,
         updatedAt,

@@ -94,5 +94,65 @@
       }
     }
   },
-  "settingsPurgeDone": "Old data purged."
+  "settingsPurgeDone": "Old data purged.",
+  "taskRepeat": "Repeat",
+  "recurrenceFrequencyDaily": "Daily",
+  "recurrenceFrequencyWeekly": "Weekly",
+  "recurrenceFrequencyMonthly": "Monthly",
+  "recurrenceEvery": "Every",
+  "recurrenceIntervalUnitDaily": "{interval, plural, one{day} other{days}}",
+  "@recurrenceIntervalUnitDaily": {
+    "placeholders": {
+      "interval": {
+        "type": "int"
+      }
+    }
+  },
+  "recurrenceIntervalUnitWeekly": "{interval, plural, one{week} other{weeks}}",
+  "@recurrenceIntervalUnitWeekly": {
+    "placeholders": {
+      "interval": {
+        "type": "int"
+      }
+    }
+  },
+  "recurrenceIntervalUnitMonthly": "{interval, plural, one{month} other{months}}",
+  "@recurrenceIntervalUnitMonthly": {
+    "placeholders": {
+      "interval": {
+        "type": "int"
+      }
+    }
+  },
+  "recurrenceWeekdayMon": "Mon",
+  "recurrenceWeekdayTue": "Tue",
+  "recurrenceWeekdayWed": "Wed",
+  "recurrenceWeekdayThu": "Thu",
+  "recurrenceWeekdayFri": "Fri",
+  "recurrenceWeekdaySat": "Sat",
+  "recurrenceWeekdaySun": "Sun",
+  "recurrenceEndDate": "Ends",
+  "recurrenceNoEndDate": "Never",
+  "taskReminder": "Remind me",
+  "reminderOffsetAtTime": "At the due time",
+  "reminderOffset10": "10 minutes before",
+  "reminderOffset30": "30 minutes before",
+  "reminderOffset60": "1 hour before",
+  "reminderOffset1440": "1 day before",
+  "notificationPermissionDenied": "Notifications are disabled. Reminders won't alert you until you enable them in system settings.",
+  "calendarNoTasksForDay": "No tasks on this day.",
+  "calendarTrackedTime": "Tracked time",
+  "calendarMarkDone": "Mark done",
+  "calendarMarkPending": "Mark pending",
+  "calendarSkip": "Skip",
+  "calendarReset": "Reset",
+  "calendarSkipped": "Skipped",
+  "remindersTitle": "Reminders",
+  "addReminder": "Add reminder",
+  "editReminder": "Edit reminder",
+  "noRemindersYet": "No reminders yet. Tap + to create one.",
+  "reminderMessage": "Message",
+  "reminderScheduledAt": "Date & time",
+  "deleteReminder": "Delete reminder",
+  "deleteReminderConfirm": "Are you sure you want to delete this reminder?"
 }

@@ -10,12 +10,14 @@ class CreateTask {
     String? description,
     required int categoryId,
     DateTime? dueDate,
+    int? recurrenceRuleId,
   }) {
     return _repository.create(
       title: title,
       description: description,
       categoryId: categoryId,
       dueDate: dueDate,
+      recurrenceRuleId: recurrenceRuleId,
     );
   }
 }

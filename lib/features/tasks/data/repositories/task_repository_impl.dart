@@ -30,6 +30,7 @@ class TaskRepositoryImpl implements TaskRepository {
     String? description,
     required int categoryId,
     DateTime? dueDate,
+    int? recurrenceRuleId,
   }) {
     return _dao.insertTask(
       TasksCompanion.insert(
@@ -37,6 +38,7 @@ class TaskRepositoryImpl implements TaskRepository {
         description: Value(description),
         categoryId: categoryId,
         dueDate: Value(dueDate),
+        recurrenceRuleId: Value(recurrenceRuleId),
       ),
     );
   }
@@ -51,6 +53,7 @@ class TaskRepositoryImpl implements TaskRepository {
         categoryId: Value(task.categoryId),
         status: Value(task.status),
         dueDate: Value(task.dueDate),
+        recurrenceRuleId: Value(task.recurrenceRuleId),
         sortOrder: Value(task.sortOrder),
         updatedAt: Value(DateTime.now()),
         completedAt: Value(task.completedAt),
@@ -78,6 +81,7 @@ class TaskRepositoryImpl implements TaskRepository {
       categoryId: row.categoryId,
       status: row.status,
       dueDate: row.dueDate,
+      recurrenceRuleId: row.recurrenceRuleId,
       sortOrder: row.sortOrder,
       createdAt: row.createdAt,
       updatedAt: row.updatedAt,

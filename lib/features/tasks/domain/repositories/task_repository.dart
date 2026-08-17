@@ -11,6 +11,7 @@ abstract interface class TaskRepository {
     String? description,
     required int categoryId,
     DateTime? dueDate,
+    int? recurrenceRuleId,
   });
 
   Future<void> update(Task task);

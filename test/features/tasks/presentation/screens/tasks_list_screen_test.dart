@@ -7,12 +7,33 @@ import 'package:hiperfoco/core/database/database_providers.dart';
 import 'package:hiperfoco/features/categories/data/repositories/category_repository_impl.dart';
 import 'package:hiperfoco/features/tasks/data/repositories/task_repository_impl.dart';
 import 'package:hiperfoco/features/tasks/domain/entities/task_status.dart';
+import 'package:hiperfoco/features/tasks/domain/repositories/notification_scheduler.dart';
+import 'package:hiperfoco/features/tasks/presentation/providers/task_providers.dart';
 import 'package:hiperfoco/features/tasks/presentation/screens/tasks_list_screen.dart';
 import 'package:hiperfoco/l10n/app_localizations.dart';
 
+/// Saving a task resyncs scheduled reminder notifications, which needs a
+/// NotificationScheduler — a no-op fake stands in for the
+/// flutter_local_notifications-backed one used in the real app.
+class _NoopNotificationScheduler implements NotificationScheduler {
+  @override
+  Future<void> cancelAll() async {}
+
+  @override
+  Future<void> schedule({
+    required int id,
+    required String title,
+    String? body,
+    required DateTime scheduledAt,
+  }) async {}
+}
+
 Widget _wrap(AppDatabase database, Widget child) {
   return ProviderScope(
-    overrides: [appDatabaseProvider.overrideWithValue(database)],
+    overrides: [
+      appDatabaseProvider.overrideWithValue(database),
+      notificationSchedulerProvider.overrideWithValue(_NoopNotificationScheduler()),
+    ],
     child: MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
@@ -73,11 +94,53 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.text('Work').last);
     await tester.pumpAndSettle();
+    await tester.ensureVisible(find.text('Save'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Save'));
     await tester.pumpAndSettle();
 
     expect(find.text('Write report'), findsOneWidget);
     expect(find.text('No tasks yet. Tap + to create one.'), findsNothing);
+
+    await _disposeCleanly(tester);
+  });
+
+  testWidgets('creating a task with Repeat enabled shows the recurring icon',
+      (tester) async {
+    // Enabling Repeat expands the form well past the default test surface's
+    // height, and ListView only builds children within its viewport/cache
+    // extent — a widget the ListView hasn't built yet doesn't exist as an
+    // Element, so ensureVisible/scrollUntilVisible have nothing to scroll
+    // to. A taller surface sidesteps that entirely by fitting the whole
+    // form on screen at once.
+    await tester.binding.setSurfaceSize(const Size(800, 2400));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await CategoryRepositoryImpl(database.categoryDao).create(
+      name: 'Health',
+      colorValue: 0xFF2F9AC2,
+      iconKey: 'health',
+    );
+
+    await tester.pumpWidget(_wrap(database, const TasksListScreen()));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pumpAndSettle();
+
+    await tester.enterText(find.byType(TextFormField).first, 'Drink water');
+    await tester.tap(find.byType(DropdownButtonFormField<int>));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Health').last);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Repeat'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Drink water'), findsOneWidget);
+    expect(find.byIcon(Icons.repeat), findsOneWidget);
 
     await _disposeCleanly(tester);
   });

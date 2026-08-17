@@ -52,6 +52,10 @@ class TaskTile extends StatelessWidget {
                 ),
                 const SizedBox(width: 6),
                 Text(category!.name),
+                if (task.isRecurring) ...[
+                  const SizedBox(width: 6),
+                  const Icon(Icons.repeat, size: 14),
+                ],
               ],
             )
           : null,
