@@ -10,6 +10,7 @@ import 'package:hiperfoco/features/timer/domain/usecases/resume_timer.dart';
 import 'package:hiperfoco/features/timer/domain/usecases/start_timer.dart';
 import 'package:hiperfoco/features/timer/domain/usecases/stop_timer.dart';
 import 'package:hiperfoco/features/timer/domain/usecases/watch_active_session.dart';
+import 'package:hiperfoco/features/timer/domain/usecases/watch_archived_between.dart';
 import 'package:hiperfoco/features/timer/domain/usecases/watch_archived_day.dart';
 import 'package:hiperfoco/features/timer/domain/usecases/watch_intervals_for_day.dart';
 import 'package:hiperfoco/features/timer/domain/usecases/watch_today_category_duration.dart';
@@ -149,6 +150,26 @@ void main() {
 
       expect(stream, emits([entry]));
       verify(() => repository.watchArchivedDay(day)).called(1);
+    });
+  });
+
+  group('WatchArchivedBetween', () {
+    test('delegates to repository.watchArchivedBetween', () {
+      final start = DateTime(2026, 1, 1);
+      final end = DateTime(2026, 1, 8);
+      final entry = TimerHistoryEntry(
+        date: start,
+        categoryId: 10,
+        totalDurationSeconds: 600,
+        sessionCount: 2,
+      );
+      when(() => repository.watchArchivedBetween(start, end))
+          .thenAnswer((_) => Stream.value([entry]));
+
+      final stream = WatchArchivedBetween(repository)(start, end);
+
+      expect(stream, emits([entry]));
+      verify(() => repository.watchArchivedBetween(start, end)).called(1);
     });
   });
 

@@ -17,6 +17,7 @@ import '../../domain/usecases/resume_timer.dart';
 import '../../domain/usecases/start_timer.dart';
 import '../../domain/usecases/stop_timer.dart';
 import '../../domain/usecases/watch_active_session.dart';
+import '../../domain/usecases/watch_archived_between.dart';
 import '../../domain/usecases/watch_archived_day.dart';
 import '../../domain/usecases/watch_intervals_for_day.dart';
 import '../../domain/usecases/watch_today_category_duration.dart';
@@ -73,6 +74,15 @@ Stream<List<TimerInterval>> intervalsForDay(Ref ref, DateTime day) {
 @riverpod
 Stream<List<TimerHistoryEntry>> archivedDay(Ref ref, DateTime day) {
   return WatchArchivedDay(ref.watch(timerRepositoryProvider))(day);
+}
+
+@riverpod
+Stream<List<TimerHistoryEntry>> archivedBetween(
+  Ref ref,
+  DateTime start,
+  DateTime end,
+) {
+  return WatchArchivedBetween(ref.watch(timerRepositoryProvider))(start, end);
 }
 
 @Riverpod(keepAlive: true)

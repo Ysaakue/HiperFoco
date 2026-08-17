@@ -519,6 +519,142 @@ class _ArchivedDayProviderElement
   DateTime get day => (origin as ArchivedDayProvider).day;
 }
 
+String _$archivedBetweenHash() => r'27d7f74ac227ce417304ba3117c540235c563429';
+
+/// See also [archivedBetween].
+@ProviderFor(archivedBetween)
+const archivedBetweenProvider = ArchivedBetweenFamily();
+
+/// See also [archivedBetween].
+class ArchivedBetweenFamily
+    extends Family<AsyncValue<List<TimerHistoryEntry>>> {
+  /// See also [archivedBetween].
+  const ArchivedBetweenFamily();
+
+  /// See also [archivedBetween].
+  ArchivedBetweenProvider call(DateTime start, DateTime end) {
+    return ArchivedBetweenProvider(start, end);
+  }
+
+  @override
+  ArchivedBetweenProvider getProviderOverride(
+    covariant ArchivedBetweenProvider provider,
+  ) {
+    return call(provider.start, provider.end);
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'archivedBetweenProvider';
+}
+
+/// See also [archivedBetween].
+class ArchivedBetweenProvider
+    extends AutoDisposeStreamProvider<List<TimerHistoryEntry>> {
+  /// See also [archivedBetween].
+  ArchivedBetweenProvider(DateTime start, DateTime end)
+    : this._internal(
+        (ref) => archivedBetween(ref as ArchivedBetweenRef, start, end),
+        from: archivedBetweenProvider,
+        name: r'archivedBetweenProvider',
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$archivedBetweenHash,
+        dependencies: ArchivedBetweenFamily._dependencies,
+        allTransitiveDependencies:
+            ArchivedBetweenFamily._allTransitiveDependencies,
+        start: start,
+        end: end,
+      );
+
+  ArchivedBetweenProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.start,
+    required this.end,
+  }) : super.internal();
+
+  final DateTime start;
+  final DateTime end;
+
+  @override
+  Override overrideWith(
+    Stream<List<TimerHistoryEntry>> Function(ArchivedBetweenRef provider)
+    create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: ArchivedBetweenProvider._internal(
+        (ref) => create(ref as ArchivedBetweenRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        start: start,
+        end: end,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeStreamProviderElement<List<TimerHistoryEntry>> createElement() {
+    return _ArchivedBetweenProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ArchivedBetweenProvider &&
+        other.start == start &&
+        other.end == end;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, start.hashCode);
+    hash = _SystemHash.combine(hash, end.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin ArchivedBetweenRef
+    on AutoDisposeStreamProviderRef<List<TimerHistoryEntry>> {
+  /// The parameter `start` of this provider.
+  DateTime get start;
+
+  /// The parameter `end` of this provider.
+  DateTime get end;
+}
+
+class _ArchivedBetweenProviderElement
+    extends AutoDisposeStreamProviderElement<List<TimerHistoryEntry>>
+    with ArchivedBetweenRef {
+  _ArchivedBetweenProviderElement(super.provider);
+
+  @override
+  DateTime get start => (origin as ArchivedBetweenProvider).start;
+  @override
+  DateTime get end => (origin as ArchivedBetweenProvider).end;
+}
+
 String _$archiveStateRepositoryHash() =>
     r'a0aab3e730a9a07bc2129dbc6fa07100e28d3ede';
 

@@ -174,5 +174,12 @@
   "addStepHint": "Add a step",
   "promoteToTask": "Promote to task",
   "promoted": "Promoted",
-  "promoteToTaskCategoryPrompt": "Choose a category for the new task"
+  "promoteToTaskCategoryPrompt": "Choose a category for the new task",
+  "statisticsPeriodDay": "Day",
+  "statisticsPeriodWeek": "Week",
+  "statisticsPeriodMonth": "Month",
+  "statisticsTotal": "Total",
+  "statisticsByCategory": "By category",
+  "statisticsTrend": "Trend",
+  "statisticsNoData": "No tracked time for this period yet."
 }

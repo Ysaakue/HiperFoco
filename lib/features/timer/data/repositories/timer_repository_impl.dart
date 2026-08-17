@@ -93,6 +93,25 @@ class TimerRepositoryImpl implements TimerRepository {
   }
 
   @override
+  Stream<List<TimerHistoryEntry>> watchArchivedBetween(
+    DateTime start,
+    DateTime end,
+  ) {
+    return _dao.watchHistoryBetween(start, end).map(
+          (rows) => [
+            for (final row in rows)
+              TimerHistoryEntry(
+                date: row.date,
+                categoryId: row.categoryId,
+                taskId: row.taskId,
+                totalDurationSeconds: row.totalDurationSeconds,
+                sessionCount: row.sessionCount,
+              ),
+          ],
+        );
+  }
+
+  @override
   Future<void> purgeHistoryOlderThan(int months) {
     final cutoff = _monthsBefore(clock.now(), months);
     return _dao.purgeHistoryOlderThan(cutoff);

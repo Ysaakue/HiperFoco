@@ -165,7 +165,7 @@ final createGoalStepUseCaseProvider =
 // ignore: unused_element
 typedef CreateGoalStepUseCaseRef = AutoDisposeProviderRef<CreateGoalStep>;
 String _$setGoalStepDoneUseCaseHash() =>
-    r'95df6adc25e545fb531d9b28a00da8b7afe48449';
+    r'c77933549b044eb5e4adbe9894c7c8c3eabc2505';
 
 /// See also [setGoalStepDoneUseCase].
 @ProviderFor(setGoalStepDoneUseCase)

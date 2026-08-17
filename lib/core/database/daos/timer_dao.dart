@@ -344,6 +344,18 @@ class TimerDao extends DatabaseAccessor<AppDatabase> with _$TimerDaoMixin {
         .watch();
   }
 
+  Stream<List<TimerHistoryDailyRow>> watchHistoryBetween(
+    DateTime start,
+    DateTime end,
+  ) {
+    final query = select(timerHistoryDaily)
+      ..where(
+        (t) =>
+            t.date.isBiggerOrEqualValue(start) & t.date.isSmallerThanValue(end),
+      );
+    return query.watch();
+  }
+
   Future<void> purgeHistoryOlderThan(DateTime cutoff) {
     return (delete(timerHistoryDaily)..where((t) => t.date.isSmallerThanValue(cutoff)))
         .go();

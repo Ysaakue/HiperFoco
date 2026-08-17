@@ -47,6 +47,16 @@ abstract interface class TimerRepository {
   /// archived yet.
   Stream<List<TimerHistoryEntry>> watchArchivedDay(DateTime day);
 
+  /// The compacted totals for every already-archived day in the half-open
+  /// range `[start, end)`. Today is never included here even if it falls in
+  /// range — it's still "hot" and hasn't been archived yet; callers that
+  /// need today's contribution should combine this with
+  /// [watchIntervalsForDay].
+  Stream<List<TimerHistoryEntry>> watchArchivedBetween(
+    DateTime start,
+    DateTime end,
+  );
+
   /// Deletes archived history strictly older than [months] months ago.
   Future<void> purgeHistoryOlderThan(int months);
 }

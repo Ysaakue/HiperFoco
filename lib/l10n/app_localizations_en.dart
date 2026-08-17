@@ -410,4 +410,25 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get promoteToTaskCategoryPrompt =>
       'Choose a category for the new task';
+
+  @override
+  String get statisticsPeriodDay => 'Day';
+
+  @override
+  String get statisticsPeriodWeek => 'Week';
+
+  @override
+  String get statisticsPeriodMonth => 'Month';
+
+  @override
+  String get statisticsTotal => 'Total';
+
+  @override
+  String get statisticsByCategory => 'By category';
+
+  @override
+  String get statisticsTrend => 'Trend';
+
+  @override
+  String get statisticsNoData => 'No tracked time for this period yet.';
 }

@@ -793,6 +793,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose a category for the new task'**
   String get promoteToTaskCategoryPrompt;
+
+  /// No description provided for @statisticsPeriodDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get statisticsPeriodDay;
+
+  /// No description provided for @statisticsPeriodWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
+  String get statisticsPeriodWeek;
+
+  /// No description provided for @statisticsPeriodMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get statisticsPeriodMonth;
+
+  /// No description provided for @statisticsTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get statisticsTotal;
+
+  /// No description provided for @statisticsByCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'By category'**
+  String get statisticsByCategory;
+
+  /// No description provided for @statisticsTrend.
+  ///
+  /// In en, this message translates to:
+  /// **'Trend'**
+  String get statisticsTrend;
+
+  /// No description provided for @statisticsNoData.
+  ///
+  /// In en, this message translates to:
+  /// **'No tracked time for this period yet.'**
+  String get statisticsNoData;
 }
 
 class _AppLocalizationsDelegate

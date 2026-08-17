@@ -459,6 +459,49 @@ void main() {
     });
   });
 
+  group('watchArchivedBetween', () {
+    test('returns every archived entry in the half-open range, excluding '
+        'days outside it', () async {
+      final day0 = DateTime(t0.year, t0.month, t0.day);
+      final day1 = day0.add(const Duration(days: 1));
+      final dayBefore = day0.subtract(const Duration(days: 1));
+
+      for (final day in [dayBefore, day0, day1]) {
+        final id = await at(
+          day.add(const Duration(hours: 9)),
+          () => repository.start(categoryId: categoryId),
+        );
+        await at(
+          day.add(const Duration(hours: 9, minutes: 10)),
+          () => repository.stop(id),
+        );
+        await repository.archiveDay(day);
+      }
+
+      final entries =
+          await repository.watchArchivedBetween(day0, day1.add(const Duration(days: 1))).first;
+
+      expect(entries, hasLength(2));
+      expect(entries.map((e) => e.date), containsAll([day0, day1]));
+      expect(entries.every((e) => e.date != dayBefore), isTrue);
+    });
+
+    test('never includes today, even though it falls in range, since today '
+        'is not archived yet', () async {
+      final day0 = DateTime(t0.year, t0.month, t0.day);
+      final id = await at(t0, () => repository.start(categoryId: categoryId));
+      await at(t0.add(const Duration(minutes: 5)), () => repository.stop(id));
+      // Note: archiveDay(day0) is deliberately NOT called — today's data is
+      // still hot.
+
+      final entries = await repository
+          .watchArchivedBetween(day0, day0.add(const Duration(days: 1)))
+          .first;
+
+      expect(entries, isEmpty);
+    });
+  });
+
   group('purgeHistoryOlderThan', () {
     test('deletes archived entries older than the cutoff, keeps newer ones',
         () async {

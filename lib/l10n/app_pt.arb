@@ -171,5 +171,12 @@
   "addStepHint": "Adicionar uma etapa",
   "promoteToTask": "Promover a tarefa",
   "promoted": "Promovida",
-  "promoteToTaskCategoryPrompt": "Escolha uma categoria para a nova tarefa"
+  "promoteToTaskCategoryPrompt": "Escolha uma categoria para a nova tarefa",
+  "statisticsPeriodDay": "Dia",
+  "statisticsPeriodWeek": "Semana",
+  "statisticsPeriodMonth": "Mês",
+  "statisticsTotal": "Total",
+  "statisticsByCategory": "Por categoria",
+  "statisticsTrend": "Tendência",
+  "statisticsNoData": "Nenhum tempo cronometrado neste período ainda."
 }

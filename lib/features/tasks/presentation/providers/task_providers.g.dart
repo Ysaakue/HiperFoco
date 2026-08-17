@@ -75,7 +75,7 @@ final updateTaskUseCaseProvider = AutoDisposeProvider<UpdateTask>.internal(
 // ignore: unused_element
 typedef UpdateTaskUseCaseRef = AutoDisposeProviderRef<UpdateTask>;
 String _$setTaskStatusUseCaseHash() =>
-    r'83e68e5d52bcf93e4d803417ed67bccef93b77c8';
+    r'd9b460fa771001b49e6f26a95e1853ff821a1cf1';
 
 /// See also [setTaskStatusUseCase].
 @ProviderFor(setTaskStatusUseCase)

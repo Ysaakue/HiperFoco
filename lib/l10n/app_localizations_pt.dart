@@ -411,4 +411,26 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get promoteToTaskCategoryPrompt =>
       'Escolha uma categoria para a nova tarefa';
+
+  @override
+  String get statisticsPeriodDay => 'Dia';
+
+  @override
+  String get statisticsPeriodWeek => 'Semana';
+
+  @override
+  String get statisticsPeriodMonth => 'Mês';
+
+  @override
+  String get statisticsTotal => 'Total';
+
+  @override
+  String get statisticsByCategory => 'Por categoria';
+
+  @override
+  String get statisticsTrend => 'Tendência';
+
+  @override
+  String get statisticsNoData =>
+      'Nenhum tempo cronometrado neste período ainda.';
 }
