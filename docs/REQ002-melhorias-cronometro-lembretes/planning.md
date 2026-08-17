@@ -19,6 +19,12 @@ Ideias capturadas durante a implementação do M4 do REQ001 (2026-08-17), para n
 - A ideia é permitir configurar o horário do disparo de forma mais explícita/flexível dentro do dia, em vez de depender do horário de criação da regra.
 - Pontos a decidir quando o planejamento for retomado: granularidade exata (um horário por regra, editável separadamente da data de início; ou múltiplos horários no mesmo dia para a mesma regra); como isso se encaixa no `ReminderSchedulingService` atual (que já resolve o "próximo disparo" a partir de `RecurrenceRule.startDate`'s hora/minuto).
 
+### 3. Filtro por categoria na tela de Tarefas
+
+- A tela de Tarefas (`TasksListScreen`) hoje só filtra por "ocultar/mostrar concluídas" — não há como restringir a lista a uma única categoria.
+- A ideia é adicionar um filtro por categoria (ex.: chip/dropdown na AppBar, semelhante ao já usado em outras telas), permitindo focar só nas tarefas de uma categoria de cada vez.
+- Pontos a decidir quando o planejamento for retomado: se o filtro deve persistir entre sessões (`shared_preferences`) ou resetar sempre que a tela é reaberta; se combina com o toggle de "ocultar concluídas" já existente ou o substitui; se cabe seleção múltipla de categorias ou só uma por vez; onde posicionar o controle sem violar o princípio de "uma ação primária por tela".
+
 ## Quando será atacado
 
 Depois da conclusão do MVP do REQ001 (M0–M7). Nenhuma implementação desta requisição foi iniciada.
