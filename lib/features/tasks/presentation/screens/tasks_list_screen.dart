@@ -5,6 +5,7 @@ import '../../../../core/widgets/confirm_dialog.dart';
 import '../../../../core/widgets/empty_state.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../categories/presentation/providers/category_providers.dart';
+import '../../../goals/presentation/screens/goals_list_screen.dart';
 import '../../domain/entities/task.dart';
 import '../../domain/entities/task_status.dart';
 import '../providers/task_providers.dart';
@@ -33,6 +34,13 @@ class _TasksListScreenState extends ConsumerState<TasksListScreen> {
       appBar: AppBar(
         title: Text(l10n.navTasks),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.flag_outlined),
+            tooltip: l10n.goalsTitle,
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const GoalsListScreen()),
+            ),
+          ),
           IconButton(
             icon: const Icon(Icons.notifications_outlined),
             tooltip: l10n.remindersTitle,

@@ -151,5 +151,25 @@
   "reminderMessage": "Mensagem",
   "reminderScheduledAt": "Data e hora",
   "deleteReminder": "Excluir lembrete",
-  "deleteReminderConfirm": "Tem certeza que deseja excluir este lembrete?"
+  "deleteReminderConfirm": "Tem certeza que deseja excluir este lembrete?",
+  "goalsTitle": "Metas",
+  "addGoal": "Adicionar meta",
+  "editGoal": "Editar meta",
+  "noGoalsYet": "Nenhuma meta ainda. Toque em + para criar.",
+  "goalTitle": "Título",
+  "goalDescription": "Descrição",
+  "deleteGoal": "Excluir meta",
+  "deleteGoalConfirm": "Tem certeza que deseja excluir \"{title}\"? Todas as etapas dela também serão excluídas.",
+  "@deleteGoalConfirm": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "noStepsYet": "Nenhuma etapa ainda. Adicione uma abaixo.",
+  "addStepHint": "Adicionar uma etapa",
+  "promoteToTask": "Promover a tarefa",
+  "promoted": "Promovida",
+  "promoteToTaskCategoryPrompt": "Escolha uma categoria para a nova tarefa"
 }

@@ -8,5 +8,5 @@ Cada pasta `REQ<NNN>-<slug>/` reúne o planejamento e as evidências de QA de um
 
 | ID | Título | Status |
 |---|---|---|
-| [REQ001](REQ001-planejamento-hiperfoco/planning.md) | Planejamento inicial do app HiperFoco (arquitetura, roadmap M0–M7) | Em andamento — M4 concluído |
+| [REQ001](REQ001-planejamento-hiperfoco/planning.md) | Planejamento inicial do app HiperFoco (arquitetura, roadmap M0–M7) | Em andamento — M5 concluído |
 | [REQ002](REQ002-melhorias-cronometro-lembretes/planning.md) | Lista de tarefas da categoria no cronômetro + horários específicos de lembrete | Backlog — aguarda conclusão do MVP do REQ001 |

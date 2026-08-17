@@ -93,7 +93,7 @@ final setTaskStatusUseCaseProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef SetTaskStatusUseCaseRef = AutoDisposeProviderRef<SetTaskStatus>;
-String _$deleteTaskUseCaseHash() => r'cad91264ba65bb33ba88a524bbc74907c7c1bca2';
+String _$deleteTaskUseCaseHash() => r'22e6847dd20c94e7ad42eac9011767cac953117a';
 
 /// See also [deleteTaskUseCase].
 @ProviderFor(deleteTaskUseCase)

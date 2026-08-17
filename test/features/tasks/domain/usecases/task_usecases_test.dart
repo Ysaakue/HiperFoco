@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hiperfoco/features/tasks/domain/entities/task.dart';
 import 'package:hiperfoco/features/tasks/domain/entities/task_status.dart';
+import 'package:hiperfoco/features/goals/domain/repositories/goal_step_repository.dart';
 import 'package:hiperfoco/features/tasks/domain/repositories/reminder_repository.dart';
 import 'package:hiperfoco/features/tasks/domain/repositories/task_occurrence_override_repository.dart';
 import 'package:hiperfoco/features/tasks/domain/repositories/task_repository.dart';
@@ -17,6 +18,8 @@ class MockReminderRepository extends Mock implements ReminderRepository {}
 
 class MockTaskOccurrenceOverrideRepository extends Mock
     implements TaskOccurrenceOverrideRepository {}
+
+class MockGoalStepRepository extends Mock implements GoalStepRepository {}
 
 void main() {
   late MockTaskRepository repository;
@@ -86,36 +89,78 @@ void main() {
   });
 
   group('SetTaskStatus', () {
-    test('delegates to repository.setStatus', () async {
+    late MockGoalStepRepository goalStepRepository;
+
+    setUp(() {
+      goalStepRepository = MockGoalStepRepository();
+    });
+
+    test(
+        'delegates to repository.setStatus and mirrors completion onto any '
+        'linked goal step', () async {
       when(() => repository.setStatus(1, TaskStatus.completed))
           .thenAnswer((_) async {});
+      when(() => goalStepRepository.setDoneForLinkedTask(1, true))
+          .thenAnswer((_) async {});
 
-      await SetTaskStatus(repository)(1, TaskStatus.completed);
+      await SetTaskStatus(repository, goalStepRepository)(
+        1,
+        TaskStatus.completed,
+      );
 
-      verify(() => repository.setStatus(1, TaskStatus.completed)).called(1);
+      verifyInOrder([
+        () => repository.setStatus(1, TaskStatus.completed),
+        () => goalStepRepository.setDoneForLinkedTask(1, true),
+      ]);
+    });
+
+    test('reopening the task mirrors isDone: false onto the linked step',
+        () async {
+      when(() => repository.setStatus(1, TaskStatus.pending))
+          .thenAnswer((_) async {});
+      when(() => goalStepRepository.setDoneForLinkedTask(1, false))
+          .thenAnswer((_) async {});
+
+      await SetTaskStatus(repository, goalStepRepository)(
+        1,
+        TaskStatus.pending,
+      );
+
+      verify(() => goalStepRepository.setDoneForLinkedTask(1, false))
+          .called(1);
     });
   });
 
   group('DeleteTask', () {
     late MockReminderRepository reminderRepository;
     late MockTaskOccurrenceOverrideRepository overrideRepository;
+    late MockGoalStepRepository goalStepRepository;
 
     setUp(() {
       reminderRepository = MockReminderRepository();
       overrideRepository = MockTaskOccurrenceOverrideRepository();
+      goalStepRepository = MockGoalStepRepository();
     });
 
-    test('deletes the task\'s reminder and overrides before the task itself',
-        () async {
+    test(
+        'deletes the task\'s reminder, overrides, and unlinks any goal step '
+        'before the task itself', () async {
       when(() => reminderRepository.deleteForTask(1)).thenAnswer((_) async {});
       when(() => overrideRepository.deleteForTask(1)).thenAnswer((_) async {});
+      when(() => goalStepRepository.clearLinkedTask(1)).thenAnswer((_) async {});
       when(() => repository.delete(1)).thenAnswer((_) async {});
 
-      await DeleteTask(repository, reminderRepository, overrideRepository)(1);
+      await DeleteTask(
+        repository,
+        reminderRepository,
+        overrideRepository,
+        goalStepRepository,
+      )(1);
 
       verifyInOrder([
         () => reminderRepository.deleteForTask(1),
         () => overrideRepository.deleteForTask(1),
+        () => goalStepRepository.clearLinkedTask(1),
         () => repository.delete(1),
       ]);
     });

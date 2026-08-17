@@ -368,4 +368,46 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get deleteReminderConfirm =>
       'Are you sure you want to delete this reminder?';
+
+  @override
+  String get goalsTitle => 'Goals';
+
+  @override
+  String get addGoal => 'Add goal';
+
+  @override
+  String get editGoal => 'Edit goal';
+
+  @override
+  String get noGoalsYet => 'No goals yet. Tap + to create one.';
+
+  @override
+  String get goalTitle => 'Title';
+
+  @override
+  String get goalDescription => 'Description';
+
+  @override
+  String get deleteGoal => 'Delete goal';
+
+  @override
+  String deleteGoalConfirm(String title) {
+    return 'Are you sure you want to delete \"$title\"? All its steps will be deleted too.';
+  }
+
+  @override
+  String get noStepsYet => 'No steps yet. Add one below.';
+
+  @override
+  String get addStepHint => 'Add a step';
+
+  @override
+  String get promoteToTask => 'Promote to task';
+
+  @override
+  String get promoted => 'Promoted';
+
+  @override
+  String get promoteToTaskCategoryPrompt =>
+      'Choose a category for the new task';
 }

@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/database/database_providers.dart';
+import '../../../goals/presentation/providers/goal_providers.dart';
 import '../../data/repositories/recurrence_rule_repository_impl.dart';
 import '../../data/repositories/reminder_repository_impl.dart';
 import '../../data/repositories/task_occurrence_override_repository_impl.dart';
@@ -62,7 +63,10 @@ UpdateTask updateTaskUseCase(Ref ref) {
 
 @riverpod
 SetTaskStatus setTaskStatusUseCase(Ref ref) {
-  return SetTaskStatus(ref.watch(taskRepositoryProvider));
+  return SetTaskStatus(
+    ref.watch(taskRepositoryProvider),
+    ref.watch(goalStepRepositoryProvider),
+  );
 }
 
 @riverpod
@@ -71,6 +75,7 @@ DeleteTask deleteTaskUseCase(Ref ref) {
     ref.watch(taskRepositoryProvider),
     ref.watch(reminderRepositoryProvider),
     ref.watch(taskOccurrenceOverrideRepositoryProvider),
+    ref.watch(goalStepRepositoryProvider),
   );
 }
 

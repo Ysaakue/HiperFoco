@@ -10,12 +10,16 @@ import '../../features/tasks/domain/entities/recurrence_frequency.dart';
 import '../../features/tasks/domain/entities/task_status.dart';
 import '../../features/timer/domain/entities/timer_session_status.dart';
 import 'daos/category_dao.dart';
+import 'daos/goal_dao.dart';
+import 'daos/goal_step_dao.dart';
 import 'daos/recurrence_rule_dao.dart';
 import 'daos/reminder_dao.dart';
 import 'daos/task_dao.dart';
 import 'daos/task_occurrence_override_dao.dart';
 import 'daos/timer_dao.dart';
 import 'tables/categories_table.dart';
+import 'tables/goal_steps_table.dart';
+import 'tables/goals_table.dart';
 import 'tables/recurrence_rules_table.dart';
 import 'tables/reminders_table.dart';
 import 'tables/task_occurrence_overrides_table.dart';
@@ -36,6 +40,8 @@ part 'app_database.g.dart';
     RecurrenceRules,
     TaskOccurrenceOverrides,
     Reminders,
+    Goals,
+    GoalSteps,
   ],
   daos: [
     CategoryDao,
@@ -44,6 +50,8 @@ part 'app_database.g.dart';
     RecurrenceRuleDao,
     TaskOccurrenceOverrideDao,
     ReminderDao,
+    GoalDao,
+    GoalStepDao,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -52,7 +60,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.executor);
 
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 6;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(

@@ -715,6 +715,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Are you sure you want to delete this reminder?'**
   String get deleteReminderConfirm;
+
+  /// No description provided for @goalsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Goals'**
+  String get goalsTitle;
+
+  /// No description provided for @addGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'Add goal'**
+  String get addGoal;
+
+  /// No description provided for @editGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit goal'**
+  String get editGoal;
+
+  /// No description provided for @noGoalsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No goals yet. Tap + to create one.'**
+  String get noGoalsYet;
+
+  /// No description provided for @goalTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get goalTitle;
+
+  /// No description provided for @goalDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get goalDescription;
+
+  /// No description provided for @deleteGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete goal'**
+  String get deleteGoal;
+
+  /// No description provided for @deleteGoalConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete \"{title}\"? All its steps will be deleted too.'**
+  String deleteGoalConfirm(String title);
+
+  /// No description provided for @noStepsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No steps yet. Add one below.'**
+  String get noStepsYet;
+
+  /// No description provided for @addStepHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a step'**
+  String get addStepHint;
+
+  /// No description provided for @promoteToTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Promote to task'**
+  String get promoteToTask;
+
+  /// No description provided for @promoted.
+  ///
+  /// In en, this message translates to:
+  /// **'Promoted'**
+  String get promoted;
+
+  /// No description provided for @promoteToTaskCategoryPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a category for the new task'**
+  String get promoteToTaskCategoryPrompt;
 }
 
 class _AppLocalizationsDelegate

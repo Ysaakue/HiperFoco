@@ -369,4 +369,46 @@ class AppLocalizationsPt extends AppLocalizations {
   @override
   String get deleteReminderConfirm =>
       'Tem certeza que deseja excluir este lembrete?';
+
+  @override
+  String get goalsTitle => 'Metas';
+
+  @override
+  String get addGoal => 'Adicionar meta';
+
+  @override
+  String get editGoal => 'Editar meta';
+
+  @override
+  String get noGoalsYet => 'Nenhuma meta ainda. Toque em + para criar.';
+
+  @override
+  String get goalTitle => 'Título';
+
+  @override
+  String get goalDescription => 'Descrição';
+
+  @override
+  String get deleteGoal => 'Excluir meta';
+
+  @override
+  String deleteGoalConfirm(String title) {
+    return 'Tem certeza que deseja excluir \"$title\"? Todas as etapas dela também serão excluídas.';
+  }
+
+  @override
+  String get noStepsYet => 'Nenhuma etapa ainda. Adicione uma abaixo.';
+
+  @override
+  String get addStepHint => 'Adicionar uma etapa';
+
+  @override
+  String get promoteToTask => 'Promover a tarefa';
+
+  @override
+  String get promoted => 'Promovida';
+
+  @override
+  String get promoteToTaskCategoryPrompt =>
+      'Escolha uma categoria para a nova tarefa';
 }

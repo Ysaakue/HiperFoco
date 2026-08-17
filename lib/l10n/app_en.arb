@@ -154,5 +154,25 @@
   "reminderMessage": "Message",
   "reminderScheduledAt": "Date & time",
   "deleteReminder": "Delete reminder",
-  "deleteReminderConfirm": "Are you sure you want to delete this reminder?"
+  "deleteReminderConfirm": "Are you sure you want to delete this reminder?",
+  "goalsTitle": "Goals",
+  "addGoal": "Add goal",
+  "editGoal": "Edit goal",
+  "noGoalsYet": "No goals yet. Tap + to create one.",
+  "goalTitle": "Title",
+  "goalDescription": "Description",
+  "deleteGoal": "Delete goal",
+  "deleteGoalConfirm": "Are you sure you want to delete \"{title}\"? All its steps will be deleted too.",
+  "@deleteGoalConfirm": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "noStepsYet": "No steps yet. Add one below.",
+  "addStepHint": "Add a step",
+  "promoteToTask": "Promote to task",
+  "promoted": "Promoted",
+  "promoteToTaskCategoryPrompt": "Choose a category for the new task"
 }
