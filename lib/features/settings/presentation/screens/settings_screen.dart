@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/widgets/confirm_dialog.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../timer/presentation/providers/timer_providers.dart';
 import '../providers/settings_providers.dart';
 
 class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
+
+  static const _retentionOptions = [3, 6, 12];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
     final themeMode = ref.watch(themeModeControllerProvider);
     final locale = ref.watch(localeControllerProvider);
+    final retentionMonths = ref.watch(retentionMonthsControllerProvider);
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.settingsTitle)),
@@ -68,8 +73,68 @@ class SettingsScreen extends ConsumerWidget {
                   .setLocale(selection.first);
             },
           ),
+          const SizedBox(height: 24),
+          Text(l10n.settingsDataStorage,
+              style: Theme.of(context).textTheme.titleMedium),
+          const SizedBox(height: 8),
+          Text(l10n.settingsRetentionMonths),
+          const SizedBox(height: 8),
+          SegmentedButton<int>(
+            style: const ButtonStyle(
+              iconSize: WidgetStatePropertyAll(14),
+              padding: WidgetStatePropertyAll(
+                EdgeInsets.symmetric(horizontal: 4),
+              ),
+              visualDensity: VisualDensity.compact,
+            ),
+            segments: [
+              for (final months in _retentionOptions)
+                ButtonSegment(
+                  value: months,
+                  label: Text(l10n.settingsRetentionMonthsValue(months)),
+                ),
+            ],
+            selected: {retentionMonths},
+            onSelectionChanged: (selection) {
+              ref
+                  .read(retentionMonthsControllerProvider.notifier)
+                  .setRetentionMonths(selection.first);
+            },
+          ),
+          const SizedBox(height: 12),
+          OutlinedButton(
+            onPressed: () => _purgeNow(context, ref, retentionMonths),
+            child: Text(l10n.settingsPurgeNow),
+          ),
         ],
       ),
     );
+  }
+
+  Future<void> _purgeNow(
+    BuildContext context,
+    WidgetRef ref,
+    int retentionMonths,
+  ) async {
+    final l10n = AppLocalizations.of(context)!;
+    final confirmed = await showConfirmDialog(
+      context,
+      title: l10n.settingsPurgeConfirmTitle,
+      message: l10n.settingsPurgeConfirmMessage(retentionMonths),
+      confirmLabel: l10n.settingsPurgeNow,
+      cancelLabel: l10n.cancel,
+      isDestructive: true,
+    );
+    if (!confirmed) return;
+
+    await ref
+        .read(purgeOldDataUseCaseProvider)
+        .call(olderThanMonths: retentionMonths);
+
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(l10n.settingsPurgeDone)),
+      );
+    }
   }
 }

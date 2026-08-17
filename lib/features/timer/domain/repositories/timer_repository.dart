@@ -1,3 +1,4 @@
+import '../entities/timer_history_entry.dart';
 import '../entities/timer_interval.dart';
 import '../entities/timer_session.dart';
 
@@ -30,4 +31,22 @@ abstract interface class TimerRepository {
 
   /// The category a given interval's session belongs to.
   Future<int?> categoryIdForSession(int sessionId);
+
+  /// Compacts every *closed* interval started on [day] into
+  /// [TimerHistoryEntry] buckets grouped by (category, task), then deletes
+  /// those interval rows. An interval still open at [day]'s end (a session
+  /// left running across midnight) is split: the portion up to midnight is
+  /// archived and a fresh interval picks up at the next day's start for the
+  /// same session, which keeps running/paused sessions alive indefinitely.
+  /// Idempotent — re-archiving a day with nothing left to archive is a
+  /// no-op.
+  Future<void> archiveDay(DateTime day);
+
+  /// The compacted totals for [day], one entry per (category, task)
+  /// bucket. Empty for a day that either had no activity or hasn't been
+  /// archived yet.
+  Stream<List<TimerHistoryEntry>> watchArchivedDay(DateTime day);
+
+  /// Deletes archived history strictly older than [months] months ago.
+  Future<void> purgeHistoryOlderThan(int months);
 }

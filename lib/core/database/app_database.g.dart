@@ -1877,6 +1877,436 @@ class TimerIntervalsCompanion extends UpdateCompanion<TimerIntervalRow> {
   }
 }
 
+class $TimerHistoryDailyTable extends TimerHistoryDaily
+    with TableInfo<$TimerHistoryDailyTable, TimerHistoryDailyRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TimerHistoryDailyTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
+    'date',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _categoryIdMeta = const VerificationMeta(
+    'categoryId',
+  );
+  @override
+  late final GeneratedColumn<int> categoryId = GeneratedColumn<int>(
+    'category_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES categories (id)',
+    ),
+  );
+  static const VerificationMeta _taskIdMeta = const VerificationMeta('taskId');
+  @override
+  late final GeneratedColumn<int> taskId = GeneratedColumn<int>(
+    'task_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _totalDurationSecondsMeta =
+      const VerificationMeta('totalDurationSeconds');
+  @override
+  late final GeneratedColumn<int> totalDurationSeconds = GeneratedColumn<int>(
+    'total_duration_seconds',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sessionCountMeta = const VerificationMeta(
+    'sessionCount',
+  );
+  @override
+  late final GeneratedColumn<int> sessionCount = GeneratedColumn<int>(
+    'session_count',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    date,
+    categoryId,
+    taskId,
+    totalDurationSeconds,
+    sessionCount,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'timer_history_daily';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TimerHistoryDailyRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+        _dateMeta,
+        date.isAcceptableOrUnknown(data['date']!, _dateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    if (data.containsKey('category_id')) {
+      context.handle(
+        _categoryIdMeta,
+        categoryId.isAcceptableOrUnknown(data['category_id']!, _categoryIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_categoryIdMeta);
+    }
+    if (data.containsKey('task_id')) {
+      context.handle(
+        _taskIdMeta,
+        taskId.isAcceptableOrUnknown(data['task_id']!, _taskIdMeta),
+      );
+    }
+    if (data.containsKey('total_duration_seconds')) {
+      context.handle(
+        _totalDurationSecondsMeta,
+        totalDurationSeconds.isAcceptableOrUnknown(
+          data['total_duration_seconds']!,
+          _totalDurationSecondsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_totalDurationSecondsMeta);
+    }
+    if (data.containsKey('session_count')) {
+      context.handle(
+        _sessionCountMeta,
+        sessionCount.isAcceptableOrUnknown(
+          data['session_count']!,
+          _sessionCountMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_sessionCountMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  List<Set<GeneratedColumn>> get uniqueKeys => [
+    {date, categoryId, taskId},
+  ];
+  @override
+  TimerHistoryDailyRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TimerHistoryDailyRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      date: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}date'],
+      )!,
+      categoryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}category_id'],
+      )!,
+      taskId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}task_id'],
+      ),
+      totalDurationSeconds: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}total_duration_seconds'],
+      )!,
+      sessionCount: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}session_count'],
+      )!,
+    );
+  }
+
+  @override
+  $TimerHistoryDailyTable createAlias(String alias) {
+    return $TimerHistoryDailyTable(attachedDatabase, alias);
+  }
+}
+
+class TimerHistoryDailyRow extends DataClass
+    implements Insertable<TimerHistoryDailyRow> {
+  final int id;
+
+  /// Local calendar day, normalized to midnight.
+  final DateTime date;
+  final int categoryId;
+
+  /// Not a hard FK: tasks can be hard-deleted (unlike categories), and
+  /// archived history must survive that.
+  final int? taskId;
+  final int totalDurationSeconds;
+  final int sessionCount;
+  const TimerHistoryDailyRow({
+    required this.id,
+    required this.date,
+    required this.categoryId,
+    this.taskId,
+    required this.totalDurationSeconds,
+    required this.sessionCount,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['date'] = Variable<DateTime>(date);
+    map['category_id'] = Variable<int>(categoryId);
+    if (!nullToAbsent || taskId != null) {
+      map['task_id'] = Variable<int>(taskId);
+    }
+    map['total_duration_seconds'] = Variable<int>(totalDurationSeconds);
+    map['session_count'] = Variable<int>(sessionCount);
+    return map;
+  }
+
+  TimerHistoryDailyCompanion toCompanion(bool nullToAbsent) {
+    return TimerHistoryDailyCompanion(
+      id: Value(id),
+      date: Value(date),
+      categoryId: Value(categoryId),
+      taskId: taskId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(taskId),
+      totalDurationSeconds: Value(totalDurationSeconds),
+      sessionCount: Value(sessionCount),
+    );
+  }
+
+  factory TimerHistoryDailyRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TimerHistoryDailyRow(
+      id: serializer.fromJson<int>(json['id']),
+      date: serializer.fromJson<DateTime>(json['date']),
+      categoryId: serializer.fromJson<int>(json['categoryId']),
+      taskId: serializer.fromJson<int?>(json['taskId']),
+      totalDurationSeconds: serializer.fromJson<int>(
+        json['totalDurationSeconds'],
+      ),
+      sessionCount: serializer.fromJson<int>(json['sessionCount']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'date': serializer.toJson<DateTime>(date),
+      'categoryId': serializer.toJson<int>(categoryId),
+      'taskId': serializer.toJson<int?>(taskId),
+      'totalDurationSeconds': serializer.toJson<int>(totalDurationSeconds),
+      'sessionCount': serializer.toJson<int>(sessionCount),
+    };
+  }
+
+  TimerHistoryDailyRow copyWith({
+    int? id,
+    DateTime? date,
+    int? categoryId,
+    Value<int?> taskId = const Value.absent(),
+    int? totalDurationSeconds,
+    int? sessionCount,
+  }) => TimerHistoryDailyRow(
+    id: id ?? this.id,
+    date: date ?? this.date,
+    categoryId: categoryId ?? this.categoryId,
+    taskId: taskId.present ? taskId.value : this.taskId,
+    totalDurationSeconds: totalDurationSeconds ?? this.totalDurationSeconds,
+    sessionCount: sessionCount ?? this.sessionCount,
+  );
+  TimerHistoryDailyRow copyWithCompanion(TimerHistoryDailyCompanion data) {
+    return TimerHistoryDailyRow(
+      id: data.id.present ? data.id.value : this.id,
+      date: data.date.present ? data.date.value : this.date,
+      categoryId: data.categoryId.present
+          ? data.categoryId.value
+          : this.categoryId,
+      taskId: data.taskId.present ? data.taskId.value : this.taskId,
+      totalDurationSeconds: data.totalDurationSeconds.present
+          ? data.totalDurationSeconds.value
+          : this.totalDurationSeconds,
+      sessionCount: data.sessionCount.present
+          ? data.sessionCount.value
+          : this.sessionCount,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TimerHistoryDailyRow(')
+          ..write('id: $id, ')
+          ..write('date: $date, ')
+          ..write('categoryId: $categoryId, ')
+          ..write('taskId: $taskId, ')
+          ..write('totalDurationSeconds: $totalDurationSeconds, ')
+          ..write('sessionCount: $sessionCount')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    date,
+    categoryId,
+    taskId,
+    totalDurationSeconds,
+    sessionCount,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TimerHistoryDailyRow &&
+          other.id == this.id &&
+          other.date == this.date &&
+          other.categoryId == this.categoryId &&
+          other.taskId == this.taskId &&
+          other.totalDurationSeconds == this.totalDurationSeconds &&
+          other.sessionCount == this.sessionCount);
+}
+
+class TimerHistoryDailyCompanion extends UpdateCompanion<TimerHistoryDailyRow> {
+  final Value<int> id;
+  final Value<DateTime> date;
+  final Value<int> categoryId;
+  final Value<int?> taskId;
+  final Value<int> totalDurationSeconds;
+  final Value<int> sessionCount;
+  const TimerHistoryDailyCompanion({
+    this.id = const Value.absent(),
+    this.date = const Value.absent(),
+    this.categoryId = const Value.absent(),
+    this.taskId = const Value.absent(),
+    this.totalDurationSeconds = const Value.absent(),
+    this.sessionCount = const Value.absent(),
+  });
+  TimerHistoryDailyCompanion.insert({
+    this.id = const Value.absent(),
+    required DateTime date,
+    required int categoryId,
+    this.taskId = const Value.absent(),
+    required int totalDurationSeconds,
+    required int sessionCount,
+  }) : date = Value(date),
+       categoryId = Value(categoryId),
+       totalDurationSeconds = Value(totalDurationSeconds),
+       sessionCount = Value(sessionCount);
+  static Insertable<TimerHistoryDailyRow> custom({
+    Expression<int>? id,
+    Expression<DateTime>? date,
+    Expression<int>? categoryId,
+    Expression<int>? taskId,
+    Expression<int>? totalDurationSeconds,
+    Expression<int>? sessionCount,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (date != null) 'date': date,
+      if (categoryId != null) 'category_id': categoryId,
+      if (taskId != null) 'task_id': taskId,
+      if (totalDurationSeconds != null)
+        'total_duration_seconds': totalDurationSeconds,
+      if (sessionCount != null) 'session_count': sessionCount,
+    });
+  }
+
+  TimerHistoryDailyCompanion copyWith({
+    Value<int>? id,
+    Value<DateTime>? date,
+    Value<int>? categoryId,
+    Value<int?>? taskId,
+    Value<int>? totalDurationSeconds,
+    Value<int>? sessionCount,
+  }) {
+    return TimerHistoryDailyCompanion(
+      id: id ?? this.id,
+      date: date ?? this.date,
+      categoryId: categoryId ?? this.categoryId,
+      taskId: taskId ?? this.taskId,
+      totalDurationSeconds: totalDurationSeconds ?? this.totalDurationSeconds,
+      sessionCount: sessionCount ?? this.sessionCount,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<DateTime>(date.value);
+    }
+    if (categoryId.present) {
+      map['category_id'] = Variable<int>(categoryId.value);
+    }
+    if (taskId.present) {
+      map['task_id'] = Variable<int>(taskId.value);
+    }
+    if (totalDurationSeconds.present) {
+      map['total_duration_seconds'] = Variable<int>(totalDurationSeconds.value);
+    }
+    if (sessionCount.present) {
+      map['session_count'] = Variable<int>(sessionCount.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TimerHistoryDailyCompanion(')
+          ..write('id: $id, ')
+          ..write('date: $date, ')
+          ..write('categoryId: $categoryId, ')
+          ..write('taskId: $taskId, ')
+          ..write('totalDurationSeconds: $totalDurationSeconds, ')
+          ..write('sessionCount: $sessionCount')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -1884,6 +2314,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $TasksTable tasks = $TasksTable(this);
   late final $TimerSessionsTable timerSessions = $TimerSessionsTable(this);
   late final $TimerIntervalsTable timerIntervals = $TimerIntervalsTable(this);
+  late final $TimerHistoryDailyTable timerHistoryDaily =
+      $TimerHistoryDailyTable(this);
   late final CategoryDao categoryDao = CategoryDao(this as AppDatabase);
   late final TaskDao taskDao = TaskDao(this as AppDatabase);
   late final TimerDao timerDao = TimerDao(this as AppDatabase);
@@ -1896,6 +2328,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     tasks,
     timerSessions,
     timerIntervals,
+    timerHistoryDaily,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -1967,6 +2400,33 @@ final class $$CategoriesTableReferences
     ).filter((f) => f.categoryId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_timerSessionsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $TimerHistoryDailyTable,
+    List<TimerHistoryDailyRow>
+  >
+  _timerHistoryDailyRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.timerHistoryDaily,
+        aliasName: $_aliasNameGenerator(
+          db.categories.id,
+          db.timerHistoryDaily.categoryId,
+        ),
+      );
+
+  $$TimerHistoryDailyTableProcessedTableManager get timerHistoryDailyRefs {
+    final manager = $$TimerHistoryDailyTableTableManager(
+      $_db,
+      $_db.timerHistoryDaily,
+    ).filter((f) => f.categoryId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _timerHistoryDailyRefsTable($_db),
+    );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
     );
@@ -2053,6 +2513,31 @@ class $$CategoriesTableFilterComposer
           }) => $$TimerSessionsTableFilterComposer(
             $db: $db,
             $table: $db.timerSessions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> timerHistoryDailyRefs(
+    Expression<bool> Function($$TimerHistoryDailyTableFilterComposer f) f,
+  ) {
+    final $$TimerHistoryDailyTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.timerHistoryDaily,
+      getReferencedColumn: (t) => t.categoryId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TimerHistoryDailyTableFilterComposer(
+            $db: $db,
+            $table: $db.timerHistoryDaily,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -2183,6 +2668,32 @@ class $$CategoriesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> timerHistoryDailyRefs<T extends Object>(
+    Expression<T> Function($$TimerHistoryDailyTableAnnotationComposer a) f,
+  ) {
+    final $$TimerHistoryDailyTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.timerHistoryDaily,
+          getReferencedColumn: (t) => t.categoryId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$TimerHistoryDailyTableAnnotationComposer(
+                $db: $db,
+                $table: $db.timerHistoryDaily,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$CategoriesTableTableManager
@@ -2198,7 +2709,11 @@ class $$CategoriesTableTableManager
           $$CategoriesTableUpdateCompanionBuilder,
           (CategoryRow, $$CategoriesTableReferences),
           CategoryRow,
-          PrefetchHooks Function({bool tasksRefs, bool timerSessionsRefs})
+          PrefetchHooks Function({
+            bool tasksRefs,
+            bool timerSessionsRefs,
+            bool timerHistoryDailyRefs,
+          })
         > {
   $$CategoriesTableTableManager(_$AppDatabase db, $CategoriesTable table)
     : super(
@@ -2252,12 +2767,17 @@ class $$CategoriesTableTableManager
               )
               .toList(),
           prefetchHooksCallback:
-              ({tasksRefs = false, timerSessionsRefs = false}) {
+              ({
+                tasksRefs = false,
+                timerSessionsRefs = false,
+                timerHistoryDailyRefs = false,
+              }) {
                 return PrefetchHooks(
                   db: db,
                   explicitlyWatchedTables: [
                     if (tasksRefs) db.tasks,
                     if (timerSessionsRefs) db.timerSessions,
+                    if (timerHistoryDailyRefs) db.timerHistoryDaily,
                   ],
                   addJoins: null,
                   getPrefetchedDataCallback: (items) async {
@@ -2304,6 +2824,27 @@ class $$CategoriesTableTableManager
                               ),
                           typedResults: items,
                         ),
+                      if (timerHistoryDailyRefs)
+                        await $_getPrefetchedData<
+                          CategoryRow,
+                          $CategoriesTable,
+                          TimerHistoryDailyRow
+                        >(
+                          currentTable: table,
+                          referencedTable: $$CategoriesTableReferences
+                              ._timerHistoryDailyRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$CategoriesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).timerHistoryDailyRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.categoryId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -2324,7 +2865,11 @@ typedef $$CategoriesTableProcessedTableManager =
       $$CategoriesTableUpdateCompanionBuilder,
       (CategoryRow, $$CategoriesTableReferences),
       CategoryRow,
-      PrefetchHooks Function({bool tasksRefs, bool timerSessionsRefs})
+      PrefetchHooks Function({
+        bool tasksRefs,
+        bool timerSessionsRefs,
+        bool timerHistoryDailyRefs,
+      })
     >;
 typedef $$TasksTableCreateCompanionBuilder =
     TasksCompanion Function({
@@ -3712,6 +4257,358 @@ typedef $$TimerIntervalsTableProcessedTableManager =
       TimerIntervalRow,
       PrefetchHooks Function({bool sessionId})
     >;
+typedef $$TimerHistoryDailyTableCreateCompanionBuilder =
+    TimerHistoryDailyCompanion Function({
+      Value<int> id,
+      required DateTime date,
+      required int categoryId,
+      Value<int?> taskId,
+      required int totalDurationSeconds,
+      required int sessionCount,
+    });
+typedef $$TimerHistoryDailyTableUpdateCompanionBuilder =
+    TimerHistoryDailyCompanion Function({
+      Value<int> id,
+      Value<DateTime> date,
+      Value<int> categoryId,
+      Value<int?> taskId,
+      Value<int> totalDurationSeconds,
+      Value<int> sessionCount,
+    });
+
+final class $$TimerHistoryDailyTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $TimerHistoryDailyTable,
+          TimerHistoryDailyRow
+        > {
+  $$TimerHistoryDailyTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $CategoriesTable _categoryIdTable(_$AppDatabase db) =>
+      db.categories.createAlias(
+        $_aliasNameGenerator(db.timerHistoryDaily.categoryId, db.categories.id),
+      );
+
+  $$CategoriesTableProcessedTableManager get categoryId {
+    final $_column = $_itemColumn<int>('category_id')!;
+
+    final manager = $$CategoriesTableTableManager(
+      $_db,
+      $_db.categories,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_categoryIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$TimerHistoryDailyTableFilterComposer
+    extends Composer<_$AppDatabase, $TimerHistoryDailyTable> {
+  $$TimerHistoryDailyTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get taskId => $composableBuilder(
+    column: $table.taskId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get totalDurationSeconds => $composableBuilder(
+    column: $table.totalDurationSeconds,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sessionCount => $composableBuilder(
+    column: $table.sessionCount,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$CategoriesTableFilterComposer get categoryId {
+    final $$CategoriesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.categories,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CategoriesTableFilterComposer(
+            $db: $db,
+            $table: $db.categories,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TimerHistoryDailyTableOrderingComposer
+    extends Composer<_$AppDatabase, $TimerHistoryDailyTable> {
+  $$TimerHistoryDailyTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get taskId => $composableBuilder(
+    column: $table.taskId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get totalDurationSeconds => $composableBuilder(
+    column: $table.totalDurationSeconds,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sessionCount => $composableBuilder(
+    column: $table.sessionCount,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$CategoriesTableOrderingComposer get categoryId {
+    final $$CategoriesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.categories,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CategoriesTableOrderingComposer(
+            $db: $db,
+            $table: $db.categories,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TimerHistoryDailyTableAnnotationComposer
+    extends Composer<_$AppDatabase, $TimerHistoryDailyTable> {
+  $$TimerHistoryDailyTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumn<int> get taskId =>
+      $composableBuilder(column: $table.taskId, builder: (column) => column);
+
+  GeneratedColumn<int> get totalDurationSeconds => $composableBuilder(
+    column: $table.totalDurationSeconds,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get sessionCount => $composableBuilder(
+    column: $table.sessionCount,
+    builder: (column) => column,
+  );
+
+  $$CategoriesTableAnnotationComposer get categoryId {
+    final $$CategoriesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.categories,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CategoriesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.categories,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$TimerHistoryDailyTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $TimerHistoryDailyTable,
+          TimerHistoryDailyRow,
+          $$TimerHistoryDailyTableFilterComposer,
+          $$TimerHistoryDailyTableOrderingComposer,
+          $$TimerHistoryDailyTableAnnotationComposer,
+          $$TimerHistoryDailyTableCreateCompanionBuilder,
+          $$TimerHistoryDailyTableUpdateCompanionBuilder,
+          (TimerHistoryDailyRow, $$TimerHistoryDailyTableReferences),
+          TimerHistoryDailyRow,
+          PrefetchHooks Function({bool categoryId})
+        > {
+  $$TimerHistoryDailyTableTableManager(
+    _$AppDatabase db,
+    $TimerHistoryDailyTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TimerHistoryDailyTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TimerHistoryDailyTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TimerHistoryDailyTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<DateTime> date = const Value.absent(),
+                Value<int> categoryId = const Value.absent(),
+                Value<int?> taskId = const Value.absent(),
+                Value<int> totalDurationSeconds = const Value.absent(),
+                Value<int> sessionCount = const Value.absent(),
+              }) => TimerHistoryDailyCompanion(
+                id: id,
+                date: date,
+                categoryId: categoryId,
+                taskId: taskId,
+                totalDurationSeconds: totalDurationSeconds,
+                sessionCount: sessionCount,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required DateTime date,
+                required int categoryId,
+                Value<int?> taskId = const Value.absent(),
+                required int totalDurationSeconds,
+                required int sessionCount,
+              }) => TimerHistoryDailyCompanion.insert(
+                id: id,
+                date: date,
+                categoryId: categoryId,
+                taskId: taskId,
+                totalDurationSeconds: totalDurationSeconds,
+                sessionCount: sessionCount,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$TimerHistoryDailyTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({categoryId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (categoryId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.categoryId,
+                                referencedTable:
+                                    $$TimerHistoryDailyTableReferences
+                                        ._categoryIdTable(db),
+                                referencedColumn:
+                                    $$TimerHistoryDailyTableReferences
+                                        ._categoryIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$TimerHistoryDailyTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $TimerHistoryDailyTable,
+      TimerHistoryDailyRow,
+      $$TimerHistoryDailyTableFilterComposer,
+      $$TimerHistoryDailyTableOrderingComposer,
+      $$TimerHistoryDailyTableAnnotationComposer,
+      $$TimerHistoryDailyTableCreateCompanionBuilder,
+      $$TimerHistoryDailyTableUpdateCompanionBuilder,
+      (TimerHistoryDailyRow, $$TimerHistoryDailyTableReferences),
+      TimerHistoryDailyRow,
+      PrefetchHooks Function({bool categoryId})
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -3724,4 +4621,6 @@ class $AppDatabaseManager {
       $$TimerSessionsTableTableManager(_db, _db.timerSessions);
   $$TimerIntervalsTableTableManager get timerIntervals =>
       $$TimerIntervalsTableTableManager(_db, _db.timerIntervals);
+  $$TimerHistoryDailyTableTableManager get timerHistoryDaily =>
+      $$TimerHistoryDailyTableTableManager(_db, _db.timerHistoryDaily);
 }

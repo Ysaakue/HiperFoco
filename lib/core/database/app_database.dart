@@ -12,13 +12,14 @@ import 'daos/task_dao.dart';
 import 'daos/timer_dao.dart';
 import 'tables/categories_table.dart';
 import 'tables/tasks_table.dart';
+import 'tables/timer_history_daily_table.dart';
 import 'tables/timer_intervals_table.dart';
 import 'tables/timer_sessions_table.dart';
 
 part 'app_database.g.dart';
 
 @DriftDatabase(
-  tables: [Categories, Tasks, TimerSessions, TimerIntervals],
+  tables: [Categories, Tasks, TimerSessions, TimerIntervals, TimerHistoryDaily],
   daos: [CategoryDao, TaskDao, TimerDao],
 )
 class AppDatabase extends _$AppDatabase {
@@ -27,7 +28,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase.forTesting(super.executor);
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(

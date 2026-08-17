@@ -2,6 +2,7 @@ import 'package:clock/clock.dart';
 
 import '../../../../core/database/app_database.dart';
 import '../../../../core/database/daos/timer_dao.dart';
+import '../../domain/entities/timer_history_entry.dart';
 import '../../domain/entities/timer_interval.dart';
 import '../../domain/entities/timer_session.dart';
 import '../../domain/repositories/timer_repository.dart';
@@ -67,11 +68,59 @@ class TimerRepositoryImpl implements TimerRepository {
     return session?.categoryId;
   }
 
+  @override
+  Future<void> archiveDay(DateTime day) {
+    final start = DateTime(day.year, day.month, day.day);
+    final end = start.add(const Duration(days: 1));
+    return _dao.archiveDay(start, end);
+  }
+
+  @override
+  Stream<List<TimerHistoryEntry>> watchArchivedDay(DateTime day) {
+    final start = DateTime(day.year, day.month, day.day);
+    return _dao.watchArchivedDay(start).map(
+          (rows) => [
+            for (final row in rows)
+              TimerHistoryEntry(
+                date: row.date,
+                categoryId: row.categoryId,
+                taskId: row.taskId,
+                totalDurationSeconds: row.totalDurationSeconds,
+                sessionCount: row.sessionCount,
+              ),
+          ],
+        );
+  }
+
+  @override
+  Future<void> purgeHistoryOlderThan(int months) {
+    final cutoff = _monthsBefore(clock.now(), months);
+    return _dao.purgeHistoryOlderThan(cutoff);
+  }
+
   (DateTime, DateTime) _todayRange() {
     final now = clock.now();
     final start = DateTime(now.year, now.month, now.day);
     final end = start.add(const Duration(days: 1));
     return (start, end);
+  }
+
+  /// [months] before [from], clamping the day-of-month to the target
+  /// month's actual length instead of letting it silently roll into the
+  /// following month (Dart's `DateTime(y, m, d)` constructor normalizes an
+  /// out-of-range day forward, e.g. `DateTime(2025, 9, 31)` becomes October
+  /// 1st — wrong when the intent is "6 months back", not "some day near
+  /// there").
+  DateTime _monthsBefore(DateTime from, int months) {
+    var year = from.year;
+    var month = from.month - months;
+    while (month <= 0) {
+      month += 12;
+      year -= 1;
+    }
+    final daysInTargetMonth = DateTime(year, month + 1, 0).day;
+    final day = from.day > daysInTargetMonth ? daysInTargetMonth : from.day;
+    return DateTime(year, month, day);
   }
 
   TimerSession _toEntity(TimerSessionRow row) {

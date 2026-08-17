@@ -433,6 +433,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unknown category'**
   String get timerHistoryUnknownCategory;
+
+  /// No description provided for @timerHistorySessionCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 session} other{{count} sessions}}'**
+  String timerHistorySessionCount(int count);
+
+  /// No description provided for @settingsDataStorage.
+  ///
+  /// In en, this message translates to:
+  /// **'Data & storage'**
+  String get settingsDataStorage;
+
+  /// No description provided for @settingsRetentionMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete history older than'**
+  String get settingsRetentionMonths;
+
+  /// No description provided for @settingsRetentionMonthsValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{months, plural, one{1 month} other{{months} months}}'**
+  String settingsRetentionMonthsValue(int months);
+
+  /// No description provided for @settingsPurgeNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Purge now'**
+  String get settingsPurgeNow;
+
+  /// No description provided for @settingsPurgeConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Purge old data'**
+  String get settingsPurgeConfirmTitle;
+
+  /// No description provided for @settingsPurgeConfirmMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'This permanently deletes focus history older than {months, plural, one{1 month} other{{months} months}}. This cannot be undone.'**
+  String settingsPurgeConfirmMessage(int months);
+
+  /// No description provided for @settingsPurgeDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Old data purged.'**
+  String get settingsPurgeDone;
 }
 
 class _AppLocalizationsDelegate

@@ -177,4 +177,52 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get timerHistoryUnknownCategory => 'Unknown category';
+
+  @override
+  String timerHistorySessionCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count sessions',
+      one: '1 session',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get settingsDataStorage => 'Data & storage';
+
+  @override
+  String get settingsRetentionMonths => 'Delete history older than';
+
+  @override
+  String settingsRetentionMonthsValue(int months) {
+    String _temp0 = intl.Intl.pluralLogic(
+      months,
+      locale: localeName,
+      other: '$months months',
+      one: '1 month',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get settingsPurgeNow => 'Purge now';
+
+  @override
+  String get settingsPurgeConfirmTitle => 'Purge old data';
+
+  @override
+  String settingsPurgeConfirmMessage(int months) {
+    String _temp0 = intl.Intl.pluralLogic(
+      months,
+      locale: localeName,
+      other: '$months months',
+      one: '1 month',
+    );
+    return 'This permanently deletes focus history older than $_temp0. This cannot be undone.';
+  }
+
+  @override
+  String get settingsPurgeDone => 'Old data purged.';
 }

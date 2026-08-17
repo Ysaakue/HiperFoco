@@ -8,4 +8,6 @@ mixin _$TimerDaoMixin on DatabaseAccessor<AppDatabase> {
   $TasksTable get tasks => attachedDatabase.tasks;
   $TimerSessionsTable get timerSessions => attachedDatabase.timerSessions;
   $TimerIntervalsTable get timerIntervals => attachedDatabase.timerIntervals;
+  $TimerHistoryDailyTable get timerHistoryDaily =>
+      attachedDatabase.timerHistoryDaily;
 }

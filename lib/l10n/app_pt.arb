@@ -62,5 +62,34 @@
   "timerHistory": "Histórico",
   "timerHistoryToday": "Hoje",
   "timerHistoryEmpty": "Nenhuma sessão de foco neste dia.",
-  "timerHistoryUnknownCategory": "Categoria desconhecida"
+  "timerHistoryUnknownCategory": "Categoria desconhecida",
+  "timerHistorySessionCount": "{count, plural, one{1 sessão} other{{count} sessões}}",
+  "@timerHistorySessionCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsDataStorage": "Dados e armazenamento",
+  "settingsRetentionMonths": "Excluir histórico com mais de",
+  "settingsRetentionMonthsValue": "{months, plural, one{1 mês} other{{months} meses}}",
+  "@settingsRetentionMonthsValue": {
+    "placeholders": {
+      "months": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsPurgeNow": "Excluir agora",
+  "settingsPurgeConfirmTitle": "Excluir dados antigos",
+  "settingsPurgeConfirmMessage": "Isso exclui permanentemente o histórico de foco com mais de {months, plural, one{1 mês} other{{months} meses}}. Essa ação não pode ser desfeita.",
+  "@settingsPurgeConfirmMessage": {
+    "placeholders": {
+      "months": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsPurgeDone": "Dados antigos excluídos."
 }

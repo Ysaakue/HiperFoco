@@ -76,4 +76,45 @@ void main() {
 
     await _disposeCleanly(tester);
   });
+
+  testWidgets(
+      'navigating to an already-archived day shows the compacted totals, '
+      'not a time range', (tester) async {
+    final categoryId = await CategoryRepositoryImpl(database.categoryDao).create(
+      name: 'Work',
+      colorValue: 0xFF7C5CFC,
+      iconKey: 'work',
+    );
+    final timerRepository = TimerRepositoryImpl(database.timerDao);
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final yesterday = today.subtract(const Duration(days: 1));
+    final t0 = yesterday.add(const Duration(hours: 9));
+
+    final sessionId = await withClock(
+      Clock.fixed(t0),
+      () => timerRepository.start(categoryId: categoryId),
+    );
+    await withClock(
+      Clock.fixed(t0.add(const Duration(minutes: 45))),
+      () => timerRepository.stop(sessionId),
+    );
+    await timerRepository.archiveDay(yesterday);
+
+    await tester.pumpWidget(_wrap(database, const TimerHistoryScreen()));
+    await tester.pump();
+    await tester.pump();
+
+    await tester.tap(find.byIcon(Icons.chevron_left));
+    await tester.pump();
+    await tester.pump();
+
+    expect(find.text('Work'), findsOneWidget);
+    expect(find.text('0:45:00'), findsOneWidget);
+    expect(find.text('1 session'), findsOneWidget);
+    // The compacted view has no per-interval start/end time to show.
+    expect(find.textContaining('09:00'), findsNothing);
+
+    await _disposeCleanly(tester);
+  });
 }

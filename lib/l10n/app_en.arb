@@ -65,5 +65,34 @@
   "timerHistory": "History",
   "timerHistoryToday": "Today",
   "timerHistoryEmpty": "No focus sessions on this day.",
-  "timerHistoryUnknownCategory": "Unknown category"
+  "timerHistoryUnknownCategory": "Unknown category",
+  "timerHistorySessionCount": "{count, plural, one{1 session} other{{count} sessions}}",
+  "@timerHistorySessionCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsDataStorage": "Data & storage",
+  "settingsRetentionMonths": "Delete history older than",
+  "settingsRetentionMonthsValue": "{months, plural, one{1 month} other{{months} months}}",
+  "@settingsRetentionMonthsValue": {
+    "placeholders": {
+      "months": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsPurgeNow": "Purge now",
+  "settingsPurgeConfirmTitle": "Purge old data",
+  "settingsPurgeConfirmMessage": "This permanently deletes focus history older than {months, plural, one{1 month} other{{months} months}}. This cannot be undone.",
+  "@settingsPurgeConfirmMessage": {
+    "placeholders": {
+      "months": {
+        "type": "int"
+      }
+    }
+  },
+  "settingsPurgeDone": "Old data purged."
 }

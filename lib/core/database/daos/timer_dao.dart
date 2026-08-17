@@ -3,12 +3,18 @@ import 'package:drift/drift.dart';
 
 import '../../../features/timer/domain/entities/timer_session_status.dart';
 import '../app_database.dart';
+import '../tables/timer_history_daily_table.dart';
 import '../tables/timer_intervals_table.dart';
 import '../tables/timer_sessions_table.dart';
 
 part 'timer_dao.g.dart';
 
-@DriftAccessor(tables: [TimerSessions, TimerIntervals])
+class _Bucket {
+  int totalSeconds = 0;
+  final Set<int> sessionIds = {};
+}
+
+@DriftAccessor(tables: [TimerSessions, TimerIntervals, TimerHistoryDaily])
 class TimerDao extends DatabaseAccessor<AppDatabase> with _$TimerDaoMixin {
   TimerDao(super.db);
 
@@ -202,5 +208,144 @@ class TimerDao extends DatabaseAccessor<AppDatabase> with _$TimerDaoMixin {
               ),
           ],
         );
+  }
+
+  /// See [TimerRepository.archiveDay] for the full contract.
+  Future<void> archiveDay(DateTime dayStart, DateTime dayEnd) {
+    return attachedDatabase.transaction(() async {
+      // 1. Split any interval still open that started before this day ends
+      //    — a session left running across the midnight boundary. The
+      //    closed portion is picked up by step 2 below; the continuation
+      //    keeps the session alive starting at the next day.
+      final openIntervals = await (select(timerIntervals)
+            ..where(
+              (t) => t.endedAt.isNull() & t.startedAt.isSmallerThanValue(dayEnd),
+            ))
+          .get();
+      for (final interval in openIntervals) {
+        await (update(timerIntervals)..where((t) => t.id.equals(interval.id)))
+            .write(TimerIntervalsCompanion(endedAt: Value(dayEnd)));
+        await into(timerIntervals).insert(
+          TimerIntervalsCompanion.insert(
+            sessionId: interval.sessionId,
+            startedAt: dayEnd,
+          ),
+        );
+        await (update(timerSessions)
+              ..where((t) => t.id.equals(interval.sessionId)))
+            .write(
+          TimerSessionsCompanion(currentIntervalStartedAt: Value(dayEnd)),
+        );
+      }
+
+      // 2. Bucket every closed interval that started on this day by
+      //    (category, task).
+      final query = select(timerIntervals).join([
+        innerJoin(
+          timerSessions,
+          timerSessions.id.equalsExp(timerIntervals.sessionId),
+        ),
+      ])
+        ..where(timerIntervals.startedAt.isBiggerOrEqualValue(dayStart))
+        ..where(timerIntervals.startedAt.isSmallerThanValue(dayEnd))
+        ..where(timerIntervals.endedAt.isNotNull());
+      final rows = await query.get();
+      if (rows.isEmpty) return;
+
+      final buckets = <(int, int?), _Bucket>{};
+      final archivedIntervalIds = <int>[];
+      final touchedSessionIds = <int>{};
+      for (final row in rows) {
+        final interval = row.readTable(timerIntervals);
+        final session = row.readTable(timerSessions);
+        final key = (session.categoryId, session.taskId);
+        final bucket = buckets.putIfAbsent(key, () => _Bucket());
+        bucket.totalSeconds +=
+            interval.endedAt!.difference(interval.startedAt).inSeconds;
+        bucket.sessionIds.add(session.id);
+        archivedIntervalIds.add(interval.id);
+        touchedSessionIds.add(session.id);
+      }
+
+      // 3. Fold each bucket into the compacted history table.
+      for (final entry in buckets.entries) {
+        final (categoryId, taskId) = entry.key;
+        final bucket = entry.value;
+        final existing = await _findHistoryRow(dayStart, categoryId, taskId);
+        if (existing == null) {
+          await into(timerHistoryDaily).insert(
+            TimerHistoryDailyCompanion.insert(
+              date: dayStart,
+              categoryId: categoryId,
+              taskId: Value(taskId),
+              totalDurationSeconds: bucket.totalSeconds,
+              sessionCount: bucket.sessionIds.length,
+            ),
+          );
+        } else {
+          await (update(timerHistoryDaily)
+                ..where((t) => t.id.equals(existing.id)))
+              .write(
+            TimerHistoryDailyCompanion(
+              totalDurationSeconds:
+                  Value(existing.totalDurationSeconds + bucket.totalSeconds),
+              sessionCount:
+                  Value(existing.sessionCount + bucket.sessionIds.length),
+            ),
+          );
+        }
+      }
+
+      // 4. Drop the now-archived interval rows.
+      await (delete(timerIntervals)..where((t) => t.id.isIn(archivedIntervalIds)))
+          .go();
+
+      // 5. Recompute each touched session's live cache. A session with
+      //    nothing left at all is only deleted if it's completed — a
+      //    running/paused session must survive as the active session even
+      //    once every one of its past intervals has been archived away.
+      for (final sessionId in touchedSessionIds) {
+        final session = await getSessionById(sessionId);
+        if (session == null) continue;
+        final remaining =
+            await (select(timerIntervals)..where((t) => t.sessionId.equals(sessionId)))
+                .get();
+        if (session.status == TimerSessionStatus.completed && remaining.isEmpty) {
+          await (delete(timerSessions)..where((t) => t.id.equals(sessionId)))
+              .go();
+          continue;
+        }
+        final remainingTotal = remaining
+            .where((iv) => iv.endedAt != null)
+            .fold<int>(0, (sum, iv) => sum + iv.endedAt!.difference(iv.startedAt).inSeconds);
+        await (update(timerSessions)..where((t) => t.id.equals(sessionId)))
+            .write(TimerSessionsCompanion(totalDurationSeconds: Value(remainingTotal)));
+      }
+    });
+  }
+
+  Future<TimerHistoryDailyRow?> _findHistoryRow(
+    DateTime date,
+    int categoryId,
+    int? taskId,
+  ) {
+    final query = select(timerHistoryDaily)
+      ..where((t) => t.date.equals(date) & t.categoryId.equals(categoryId));
+    if (taskId == null) {
+      query.where((t) => t.taskId.isNull());
+    } else {
+      query.where((t) => t.taskId.equals(taskId));
+    }
+    return query.getSingleOrNull();
+  }
+
+  Stream<List<TimerHistoryDailyRow>> watchArchivedDay(DateTime dayStart) {
+    return (select(timerHistoryDaily)..where((t) => t.date.equals(dayStart)))
+        .watch();
+  }
+
+  Future<void> purgeHistoryOlderThan(DateTime cutoff) {
+    return (delete(timerHistoryDaily)..where((t) => t.date.isSmallerThanValue(cutoff)))
+        .go();
   }
 }

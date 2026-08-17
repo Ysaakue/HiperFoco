@@ -399,5 +399,197 @@ class _IntervalsForDayProviderElement
   DateTime get day => (origin as IntervalsForDayProvider).day;
 }
 
+String _$archivedDayHash() => r'03f85e77f9dec6bfe57f8ed4c99467d5bc0c04ae';
+
+/// See also [archivedDay].
+@ProviderFor(archivedDay)
+const archivedDayProvider = ArchivedDayFamily();
+
+/// See also [archivedDay].
+class ArchivedDayFamily extends Family<AsyncValue<List<TimerHistoryEntry>>> {
+  /// See also [archivedDay].
+  const ArchivedDayFamily();
+
+  /// See also [archivedDay].
+  ArchivedDayProvider call(DateTime day) {
+    return ArchivedDayProvider(day);
+  }
+
+  @override
+  ArchivedDayProvider getProviderOverride(
+    covariant ArchivedDayProvider provider,
+  ) {
+    return call(provider.day);
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'archivedDayProvider';
+}
+
+/// See also [archivedDay].
+class ArchivedDayProvider
+    extends AutoDisposeStreamProvider<List<TimerHistoryEntry>> {
+  /// See also [archivedDay].
+  ArchivedDayProvider(DateTime day)
+    : this._internal(
+        (ref) => archivedDay(ref as ArchivedDayRef, day),
+        from: archivedDayProvider,
+        name: r'archivedDayProvider',
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$archivedDayHash,
+        dependencies: ArchivedDayFamily._dependencies,
+        allTransitiveDependencies: ArchivedDayFamily._allTransitiveDependencies,
+        day: day,
+      );
+
+  ArchivedDayProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.day,
+  }) : super.internal();
+
+  final DateTime day;
+
+  @override
+  Override overrideWith(
+    Stream<List<TimerHistoryEntry>> Function(ArchivedDayRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: ArchivedDayProvider._internal(
+        (ref) => create(ref as ArchivedDayRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        day: day,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeStreamProviderElement<List<TimerHistoryEntry>> createElement() {
+    return _ArchivedDayProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ArchivedDayProvider && other.day == day;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, day.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin ArchivedDayRef on AutoDisposeStreamProviderRef<List<TimerHistoryEntry>> {
+  /// The parameter `day` of this provider.
+  DateTime get day;
+}
+
+class _ArchivedDayProviderElement
+    extends AutoDisposeStreamProviderElement<List<TimerHistoryEntry>>
+    with ArchivedDayRef {
+  _ArchivedDayProviderElement(super.provider);
+
+  @override
+  DateTime get day => (origin as ArchivedDayProvider).day;
+}
+
+String _$archiveStateRepositoryHash() =>
+    r'a0aab3e730a9a07bc2129dbc6fa07100e28d3ede';
+
+/// See also [archiveStateRepository].
+@ProviderFor(archiveStateRepository)
+final archiveStateRepositoryProvider =
+    Provider<ArchiveStateRepository>.internal(
+      archiveStateRepository,
+      name: r'archiveStateRepositoryProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$archiveStateRepositoryHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef ArchiveStateRepositoryRef = ProviderRef<ArchiveStateRepository>;
+String _$dailyArchiveServiceHash() =>
+    r'fa8aa75b427192e82eb7afe255604f46a9af956e';
+
+/// See also [dailyArchiveService].
+@ProviderFor(dailyArchiveService)
+final dailyArchiveServiceProvider = Provider<DailyArchiveService>.internal(
+  dailyArchiveService,
+  name: r'dailyArchiveServiceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$dailyArchiveServiceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef DailyArchiveServiceRef = ProviderRef<DailyArchiveService>;
+String _$purgeOldDataUseCaseHash() =>
+    r'2e47f0c855fd7490dd05e59e43ed2afff62677f5';
+
+/// See also [purgeOldDataUseCase].
+@ProviderFor(purgeOldDataUseCase)
+final purgeOldDataUseCaseProvider = AutoDisposeProvider<PurgeOldData>.internal(
+  purgeOldDataUseCase,
+  name: r'purgeOldDataUseCaseProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$purgeOldDataUseCaseHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef PurgeOldDataUseCaseRef = AutoDisposeProviderRef<PurgeOldData>;
+String _$retentionMonthsControllerHash() =>
+    r'ce559e290a36afa8ab164d693fdd76532597aef1';
+
+/// See also [RetentionMonthsController].
+@ProviderFor(RetentionMonthsController)
+final retentionMonthsControllerProvider =
+    NotifierProvider<RetentionMonthsController, int>.internal(
+      RetentionMonthsController.new,
+      name: r'retentionMonthsControllerProvider',
+      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+          ? null
+          : _$retentionMonthsControllerHash,
+      dependencies: null,
+      allTransitiveDependencies: null,
+    );
+
+typedef _$RetentionMonthsController = Notifier<int>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

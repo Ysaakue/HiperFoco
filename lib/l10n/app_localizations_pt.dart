@@ -178,4 +178,52 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get timerHistoryUnknownCategory => 'Categoria desconhecida';
+
+  @override
+  String timerHistorySessionCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count sessões',
+      one: '1 sessão',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get settingsDataStorage => 'Dados e armazenamento';
+
+  @override
+  String get settingsRetentionMonths => 'Excluir histórico com mais de';
+
+  @override
+  String settingsRetentionMonthsValue(int months) {
+    String _temp0 = intl.Intl.pluralLogic(
+      months,
+      locale: localeName,
+      other: '$months meses',
+      one: '1 mês',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get settingsPurgeNow => 'Excluir agora';
+
+  @override
+  String get settingsPurgeConfirmTitle => 'Excluir dados antigos';
+
+  @override
+  String settingsPurgeConfirmMessage(int months) {
+    String _temp0 = intl.Intl.pluralLogic(
+      months,
+      locale: localeName,
+      other: '$months meses',
+      one: '1 mês',
+    );
+    return 'Isso exclui permanentemente o histórico de foco com mais de $_temp0. Essa ação não pode ser desfeita.';
+  }
+
+  @override
+  String get settingsPurgeDone => 'Dados antigos excluídos.';
 }
