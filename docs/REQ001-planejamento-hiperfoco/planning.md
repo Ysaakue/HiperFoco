@@ -161,7 +161,9 @@ Queries agregadas no Drift (SUM/GROUP BY, não loop em memória) combinando a ca
 Auditoria de strings hardcoded, acessibilidade (escala de fonte, contraste, alvo de toque ≥48dp), empty states, Settings finalizado, ícone/splash, build de release assinado, checklist de UX-TDAH revisado.
 *Pronto quando:* app pronto para submissão na Play Store.
 
-*(Fora de escopo por ora: widget de home screen, backup/exportação, gamificação, iOS — candidatos a M8+.)*
+**M8 — Documentação visual (Figma) das telas implementadas** *(último milestone do REQ001)*
+Consolidar em um arquivo Figma todas as telas já implementadas em M0–M7 (Home, Timer, Tasks, Calendar, Goals, Reminders, Statistics, Settings, formulários e estados vazios/erro), nos dois temas (claro/escuro), organizadas por fluxo de navegação. Não é um redesign das telas atuais — é a base de referência visual para orientar o design das próximas telas.
+*Pronto quando:* arquivo Figma publicado cobrindo cada tela implementada em M0–M7, organizado por fluxo, com link registrado neste documento e em `docs/INDEX.md`.
 
 ### Gate de qualidade ao final de cada milestone
 
@@ -169,6 +171,8 @@ Cada milestone só é considerado concluído com dois entregáveis adicionais, n
 
 1. **Cobertura máxima de testes unitários** nas camadas `domain` e `data` da(s) feature(s) do milestone (usecases e repositórios são o alvo prioritário — é onde mora a regra de negócio), mais testes de widget para as telas novas. Rodar `flutter test --coverage` e revisar o relatório (`lcov`) antes de avançar; qualquer usecase sem teste é bloqueador, não é aceitável avançar de milestone com lógica de negócio não testada.
 2. **Documento de ciclo de testes para QA**, em `qa/M{n}-test-cycle.md` (dentro desta mesma pasta `docs/REQ001-planejamento-hiperfoco/`), contendo: lista dos requisitos cobertos pelo milestone, casos de teste em formato dado/quando/então com passos manuais reproduzíveis, critério de aceite por caso, e uma coluna de status (pendente/aprovado/reprovado). Esse documento é o gate formal — só se avança ao próximo milestone com todos os casos aprovados.
+
+**M8 foge desse padrão** — não produz código, então não há cobertura de testes nem `qa/M8-test-cycle.md`. O gate de M8 é simplesmente a publicação do arquivo Figma, conforme o critério de pronto descrito no roadmap.
 
 ---
 
@@ -202,5 +206,6 @@ Cada milestone só é considerado concluído com dois entregáveis adicionais, n
 - **M2 (crítico):** teste de integração cobrindo iniciar → pausar → fechar app → reabrir → retomar → parar, validando que a duração total bate com a soma dos intervalos.
 - **M3 (crítico):** testes unitários de fronteira de data para `DailyArchiveService` — múltiplos dias em atraso, sessão aberta atravessando a meia-noite, idempotência ao rodar duas vezes, purga por limite de meses configurável.
 - **M4:** teste manual em device real de agendamento de notificação + reboot do device, para validar sobrevivência do agendamento.
+- **M8:** não há `flutter test`/`flutter analyze` a rodar — a verificação é revisar o arquivo Figma publicado contra as telas de fato implementadas em M0–M7 (nenhuma faltando, nos dois temas).
 - Ao final de cada milestone: relatório de cobertura revisado + `qa/M{n}-test-cycle.md` preenchido e aprovado (ver "Gate de qualidade" no roadmap) antes de iniciar o próximo milestone.
 - Cada milestone finaliza com `flutter run` manual no Android exercitando o fluxo completo daquela fase antes de avançar para a próxima.

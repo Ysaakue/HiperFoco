@@ -2,7 +2,7 @@
 
 ## Contexto
 
-Ideias capturadas durante a implementação do M4 do REQ001 (2026-08-17), para não se perderem — **não** é um planejamento detalhado de arquitetura ainda. O trabalho nesta requisição só começa depois que o MVP do REQ001 (roadmap M0–M7) estiver concluído. Quando chegar a vez do REQ002, este documento deve ser revisado e expandido (decisões de arquitetura, milestones, critérios de pronto) antes de qualquer implementação, seguindo o mesmo processo usado no REQ001.
+Ideias capturadas durante a implementação do M4 do REQ001 (2026-08-17), para não se perderem — **não** é um planejamento detalhado de arquitetura ainda. O trabalho nesta requisição só começa depois que o MVP do REQ001 (roadmap M0–M8) estiver concluído. Quando chegar a vez do REQ002, este documento deve ser revisado e expandido (decisões de arquitetura, milestones, critérios de pronto) antes de qualquer implementação, seguindo o mesmo processo usado no REQ001.
 
 ## Ideias capturadas
 
@@ -27,7 +27,7 @@ Ideias capturadas durante a implementação do M4 do REQ001 (2026-08-17), para n
 
 ## Quando será atacado
 
-Depois da conclusão do MVP do REQ001 (M0–M7). Nenhuma implementação desta requisição foi iniciada.
+Depois da conclusão do MVP do REQ001 (M0–M8). Nenhuma implementação desta requisição foi iniciada.
 
 ## Status
 
